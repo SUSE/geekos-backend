@@ -1,0 +1,9 @@
+{
+  "id": "file:/users_search.json",
+  "type": "object",
+  "required": ["meta", "results"],
+  "properties": {
+    "meta": { "$ref": "file:/search_meta.json#" },
+    "results": { "$ref": "file:/users_results.json#" }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "file:/user.json",
+  "type": "object",
+  "required": [
+    "employeenumber",
+    "email",
+    "username",
+    "title",
+    "fullname",
+    "phone",
+    "country",
+    "notes",
+    "gravatar",
+    "picture_160",
+    "picture_25",
+    "org_unit",
+    "tags"
+  ],
+  "properties": {
+    "employeenumber": { "type": "string" },
+    "email": { "type": "string" },
+    "username": { "type": "string" },
+    "title": { "type": "string" },
+    "fullname": { "type": "string" },
+    "phone":  { "oneOf": [
+      { "type": "null" },
+      { "type": "string" }
+    ]},
+    "country": { "type": "string" },
+    "birthday": { "type": [ "string", "null" ] },
+    "notes": { "type": [ "string", "null" ] },
+    "gravatar": { "type": [ "string", "null" ] },
+    "picture_160": { "type": [ "string", "null" ] },
+    "picture_25": { "type": [ "string", "null" ] },
+    "location": { "type": [ "string", "null" ] },
+    "room": { "type": [ "string", "null" ] },
+    "coordinates": { "type": [ "string", "null" ] },
+    "teamlead_of": {
+      "oneOf": [
+        { "type": "null"},
+        { "$ref": "file:/org_unit_summary.json#" }
+      ]
+    },
+    "org_unit": { "type": ["string", "null"] },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "admin": { "type": "boolean" }
+  }
+}

@@ -1,0 +1,38 @@
+API backend for the SUSE Geeko Browser.
+
+<br/>
+
+<h4>API Spec:</h4>
+
+<a href="<%= api_search_path(q: 'test') %>">/api/search?q=search_term</a> - Global search (users + teams)
+<br/><br/>
+
+<a href="<%= api_onboarding_path %>">/api/onboarding</a> - Onboarding Information
+<br/><br/>
+
+<a href="<%= api_teams_path %>">/api/teams</a> - All teams
+<br/>
+<a href="<%= api_team_path(OrgUnit.last.try(:id) || '123') %>">/api/teams/&lt;teamid&gt;</a> - Single team
+<br/>
+<a href="<%= root_api_teams_path %>">/api/teams/root</a> - SUSE root team
+<br/>
+<a href="<%= search_api_teams_path(q: 'scc') %>">/api/teams/search?q=search_term</a> - Search teams
+<br/><br/>
+
+<a href="<%= api_user_path(User.last.try(:employeenumber) || '21868') %>">/api/users/:id</a> - User details
+<br/>
+<a href="<%= search_api_users_path(q: 'test') %>">/api/users/search?q=search_term</a> - Search users
+<br/><br/>
+
+<a href="<%= api_locations_path %>">/api/locations</a> - Office locations
+<br/>
+<a href="<%= api_location_path(id: '7') %>">/api/locations/:floor_id</a> - Users in one location
+<br/>
+<a href="<%= api_location_room_path(location_id: '1', id: '1.2.7') %>">/api/locations/:floor_id/rooms/:floor_room_number</a> - Users in one room
+<br/><br/>
+
+<a href="<%= api_tags_path %>">/api/tags</a> - List tags
+<br/>
+<a href="<%= api_tag_path(id: Tag.last.try(:name) || 'test') %>">/api/tag/&lt;name&gt;</a> - Show tag
+<br/>
+<a href="<%= search_api_tags_path(q: Tag.last.try(:name) || 'test') %>">/api/tags/search?q=&lt;name&gt;</a> - Search tags

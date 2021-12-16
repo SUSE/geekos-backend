@@ -1,0 +1,35 @@
+# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+Rails.application.routes.draw do
+  root to: 'application#index'
+
+  get '/sessions/init', to: 'sessions#init'
+  get '/sessions/login', to: 'sessions#login'
+
+  namespace :api do
+    resource :search, only: [:show]
+    resource :onboarding, only: [:show]
+    resource :blog, only: [:show]
+    resources :users, only: %i[show update] do
+      collection do
+        get :search
+        get :verify_token
+      end
+      member do
+        post :tags
+      end
+    end
+    resources :teams, only: %i[index show update] do
+      collection do
+        get :root
+        get :search
+      end
+    end
+    resources :tags, only: %i[show index] do
+      get :search, on: :collection
+    end
+
+    resources :locations, only: %i[show index] do
+      resources :rooms, only: [:show], constraints: { id: /[0-9A-Za-z\-.20%]+/ }, format: false
+    end
+  end
+end

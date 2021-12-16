@@ -1,0 +1,45 @@
+{
+  "id": "file:/org_unit.json",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "short_description",
+    "description",
+    "parents",
+    "depth",
+    "children",
+    "members",
+    "depth_name",
+    "lead"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "short_description": { "type": "string" },
+    "description": { "type": "string" },
+    "img": { "type": [ "string", "null" ] },
+    "lead": { "$ref": "file:/user_summary.json#" },
+    "parents": {
+      "type": "array",
+      "items": { "$ref": "file:/parent_org_unit.json#" }
+    },
+    "depth": { "type": "integer" },
+    "depth_name": {
+      "type": "object",
+      "required": ["lead", "unit"],
+      "properties": {
+        "lead": { "type": "string" },
+        "unit": { "type": "string" }
+      }
+    },
+    "children": {
+      "type": "array",
+      "items": { "$ref": "file:/org_unit_summary.json#" }
+    },
+    "members": {
+      "type": "array",
+      "items": { "$ref": "file:/user_summary.json#" }
+    }
+  }
+}

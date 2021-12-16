@@ -1,0 +1,34 @@
+{
+  "id": "file:/user_summary.json",
+  "type": "object",
+  "required": [
+    "email",
+    "username",
+    "title",
+    "fullname",
+    "phone",
+    "gravatar",
+    "picture_160",
+    "picture_25",
+    "teamlead_of"
+  ],
+  "properties": {
+    "email": { "type": "string" },
+    "username": { "type": "string" },
+    "title": { "type": "string" },
+    "fullname": { "type": "string" },
+    "phone":  { "oneOf": [
+      { "type": "null" },
+      { "type": "string" }
+    ]},
+    "gravatar": { "type": [ "string", "null" ] },
+    "picture_160": { "type": [ "string", "null" ] },
+    "picture_25": { "type": [ "string", "null" ] },
+    "teamlead_of": {
+      "oneOf": [
+        { "type": "null"},
+        { "$ref": "file:/org_unit_summary.json#" }
+      ]
+    }
+  }
+}

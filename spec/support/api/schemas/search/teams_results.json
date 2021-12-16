@@ -1,0 +1,7 @@
+{
+  "id": "file:/teams_results.json",
+  "type": "array",
+  "items": {
+    "$ref": "file:/org_unit.json#"
+  }
+}

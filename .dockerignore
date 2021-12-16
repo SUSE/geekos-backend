@@ -1,0 +1,13 @@
+tmp/*
+log/*
+db/*.sqlite3
+.git
+Dockerfile
+.gitlab-ci.yml
+.byebug_history
+public/system
+tags.json
+deploy/
+doc/
+coverage/
+config/application.yml

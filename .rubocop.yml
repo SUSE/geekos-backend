@@ -1,0 +1,72 @@
+AllCops:
+  TargetRubyVersion: 2.7.5
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  NewCops: enable
+
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-thread_safety
+
+# RSpec/DescribeClass:
+#   Exclude:
+#     - spec/requests/**/*
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/MultipleExpectations:
+  Max: 4
+
+# Mongoid doesn't need/have `dependent: nil` for example
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: true
+  Max: 30
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 40
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 11
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/Pick:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false

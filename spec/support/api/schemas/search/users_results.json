@@ -1,0 +1,7 @@
+{
+  "id": "file:/users_results.json",
+  "type": "array",
+  "items": {
+    "$ref": "file:/user_summary.json#"
+  }
+}

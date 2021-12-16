@@ -1,0 +1,7 @@
+{
+  "id": "file:/org_units.json",
+  "type": "array",
+  "items": {
+    "$ref": "file:/org_unit.json#"
+  }
+}

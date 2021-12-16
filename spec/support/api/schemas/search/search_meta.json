@@ -1,0 +1,9 @@
+{
+  "id": "file:/search_meta.json",
+  "type": "object",
+  "required": ["hits", "took"],
+  "properties": {
+    "hits": { "type": "number" },
+    "took": { "type": "number" }
+  }
+}

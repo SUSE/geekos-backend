@@ -1,0 +1,7 @@
+{
+  "id": "file:/tags.json",
+  "type": "array",
+  "items": {
+    "$ref": "file:/tag.json#"
+  }
+}

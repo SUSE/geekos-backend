@@ -1,0 +1,32 @@
+{
+  "id": "file:/org_unit_summary.json",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "short_description",
+    "img",
+    "depth",
+    "depth_name",
+    "children"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "short_description": { "type": "string" },
+    "img": { "type": [ "string", "null" ] },
+    "depth": { "type": "integer" },
+    "depth_name": {
+      "type": "object",
+      "required": ["lead", "unit"],
+      "properties": {
+        "lead": { "type": "string" },
+        "unit": { "type": "string" }
+      }
+    },
+    "children": {
+      "type": "array",
+      "items": { "$ref": "file:/org_unit_summary.json#" }
+    }
+  }
+}

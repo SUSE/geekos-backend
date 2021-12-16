@@ -1,0 +1,11 @@
+class Api::SearchesController < Api::BaseController
+  def show
+    render json: Search.new(search_params, [User]), status: :ok
+  end
+
+  protected
+
+  def search_params
+    params.require(:q)
+  end
+end
