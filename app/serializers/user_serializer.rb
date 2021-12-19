@@ -3,7 +3,7 @@ class UserSerializer < UserSummarySerializer
              :fullname, :phone,
              :country, :notes, :gravatar, :picture_160, :picture_25,
              :location, :room, :coordinates,
-             :birthday, :teamlead_of, :org_unit, :tags, :admin
+             :birthday, :teamlead_of, :org_unit, :tags, :admin, :accounts
 
   def tags
     object.tags.pluck(:name)
