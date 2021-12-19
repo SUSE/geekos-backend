@@ -17,7 +17,7 @@ class OrgUnitSerializer < ActiveModel::Serializer
   end
 
   def children
-    object.children.map { |o| OrgUnitSummarySerializer.new(o) }
+    object.children.sort_by(&:name).map { |o| OrgUnitSummarySerializer.new(o) }
   end
 
   def lead
