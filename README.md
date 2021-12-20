@@ -1,3 +1,5 @@
+<a href="https://codeclimate.com/github/SUSE/geekos-backend/maintainability"><img src="https://api.codeclimate.com/v1/badges/ff0dff43b4acf5d77303/maintainability" /></a><a href="https://codeclimate.com/github/SUSE/geekos-backend/test_coverage"><img src="https://api.codeclimate.com/v1/badges/ff0dff43b4acf5d77303/test_coverage" /></a>
+
 # Geekos
 
 Geekos is a server application to query and manage a community of users.
