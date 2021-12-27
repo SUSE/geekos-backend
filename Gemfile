@@ -8,7 +8,7 @@ end
 # Core
 gem 'bootsnap', require: false
 gem 'puma'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 6.1' # TODO: mongoid is not yet compatible with rails7
 
 # storage
 gem 'mongoid'

@@ -37,7 +37,7 @@ describe Crawler do
       end
 
       it 'Would be turned to STDOUT' do
-        expect(logger.instance_variable_get('@logdev').dev).to eq $stdout
+        expect(logger.instance_variable_get(:@logdev).dev).to eq $stdout
       end
     end
 
@@ -49,7 +49,7 @@ describe Crawler do
       end
 
       it 'Would be turned to STDOUT' do
-        expect(logger.instance_variable_get('@logdev').dev).to be_instance_of(File)
+        expect(logger.instance_variable_get(:@logdev).dev).to be_instance_of(File)
       end
     end
   end
