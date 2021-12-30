@@ -72,8 +72,17 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     unit.members << user
   end
 
-  def set_default_orgunit_name(org, user)
-    name = "#{user.fullname}'s team"
+  def set_default_orgunit_name(org, leader)
+    leader_titles = [
+      'Head of', '(Senior )?Engineering Manager[,\- ]*',
+      '(Senior )?Manager[,\- ]*(of)?', 'Team[ ]?lead(er)?[,\- ]*(of)?(for)?',
+      'Director[,\- ]*(of)?', '^VP[,\- ]*[of]*', 'Vice President[ of]?'
+    ]
+    name = if (title = leader_titles.find { |lt| leader.title =~ /#{lt}/i })
+             leader.title.gsub(/#{title}/i, '').strip
+           else
+             "#{leader.fullname}'s team"
+           end
     log.info "OrgTree -> Setting team name '#{name}'"
     org.update!(name: name)
   end

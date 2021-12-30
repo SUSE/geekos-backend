@@ -168,6 +168,14 @@ describe Crawler::OrgTree do
       expect(OrgUnit.count).to be 4
     end
 
+    it 'defaults orgunit name to leader title' do
+      unit = OrgUnit.find_by(depth: 3)
+      unit.lead.update!(title: 'Manager of Heroes')
+      unit.update!(name: '')
+      described_class.new.tree_to_mongo
+      expect(unit.reload.name).to eq 'Heroes'
+    end
+
     it 'defaults orgunit name to lead name' do
       unit = OrgUnit.find_by(depth: 3)
       expect(unit.name).to eq "#{unit.lead.fullname}'s team"
