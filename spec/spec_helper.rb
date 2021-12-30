@@ -4,6 +4,7 @@ SimpleCov.minimum_coverage 100
 SimpleCov.start 'rails' do
   add_filter 'lib/ldap.rb'
   add_filter 'lib/crawler/delve.rb'
+  add_filter 'lib/crawler/fuze.rb'
   add_filter 'lib/oic_client.rb'
   add_filter 'app/controllers/api/locations_controller.rb'
   add_filter 'app/controllers/api/rooms_controller.rb'

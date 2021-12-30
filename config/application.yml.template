@@ -8,6 +8,7 @@
 "geekos_trello_token": ""
 "geekos_trello_lists": ""
 "geekos_fuze_secret": ""
+"geekos_delve_auth_cookie": ""
 "oic_provider_url": ""
 "oic_client_id": ""
 "oic_secret": ""

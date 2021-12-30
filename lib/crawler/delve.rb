@@ -33,7 +33,7 @@ class Crawler::Delve < Crawler::BaseCrawler
     # needed cookies: X-Delve-AuthEurS
     def remote_data
       @remote_data ||= RestClient.get(delve_image_url,
-                                      { cookies: { "X-Delve-AuthEurS" => ENV['delve_auth_cookie'] } }).body
+                                      { cookies: { "X-Delve-AuthEurS" => ENV['geekos_delve_auth_cookie'] } }).body
     rescue StandardError
       nil
     end
