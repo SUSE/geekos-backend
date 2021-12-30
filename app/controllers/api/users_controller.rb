@@ -13,7 +13,7 @@ class Api::UsersController < Api::BaseController
     authorize! :update, user
     if params[:avatar]
       user.img = params[:avatar].read
-      user.img.name = "#{user.employeenumber}.#{user.img.format}"
+      user.img.name = "upload.#{user.employeenumber}.#{user.img.format}"
     end
     # TODO: update params[:location]
     if user.update(user_params)

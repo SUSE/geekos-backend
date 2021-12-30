@@ -17,7 +17,7 @@ Lint/AmbiguousBlockAssociation:
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
   Exclude:
-    - 'spec/lib/crawler/picture_spec.rb'
+    - 'spec/lib/crawler/delve_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
@@ -41,7 +41,7 @@ RSpec/ContextWording:
 # Offense count: 2
 RSpec/EmptyExampleGroup:
   Exclude:
-    - 'spec/lib/crawler/picture_spec.rb'
+    - 'spec/lib/crawler/delve_spec.rb'
     - 'spec/serializers/user_serializer_spec.rb'
 
 # Offense count: 12
@@ -55,4 +55,4 @@ Metrics/AbcSize:
   Exclude:
     - 'lib/crawler/fuze.rb'
     - 'lib/crawler/ldap.rb'
-    - 'lib/crawler/org_tree.rb'  
+    - 'lib/crawler/org_tree.rb'
