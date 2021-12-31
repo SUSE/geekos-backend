@@ -6,7 +6,7 @@ describe '/api/search', type: 'request' do
     user = create(:user, :ldap)
     user.ldap.update(employeenumber: '23', title: 'Magic Mushroom')
     user.save
-    [User].each(&:create_indexes)
+    [User, OrgUnit, Tag].each(&:create_indexes)
   end
 
   describe 'results from title' do

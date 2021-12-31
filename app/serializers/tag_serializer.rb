@@ -1,5 +1,9 @@
 class TagSerializer < ActiveModel::Serializer
-  attributes :name, :description, :users, :created_at, :updated_at
+  attributes :type, :name, :description, :users, :created_at, :updated_at
+
+  def type
+    'tag'
+  end
 
   def users
     object.users.map { |u| UserSummarySerializer.new(u) }

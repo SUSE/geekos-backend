@@ -1,8 +1,12 @@
 class OrgUnitSerializer < ActiveModel::Serializer
-  attributes :id, :name, :short_description, :description, :parents, :img,
+  attributes :type, :id, :name, :short_description, :description, :parents, :img,
              :depth, :depth_name, :children, :members, :lead
 
   has_many :members, serializer: UserSummarySerializer
+
+  def type
+    'orgunit'
+  end
 
   def img
     object.img&.thumb('160x160#')&.url(host: '')

@@ -2,6 +2,7 @@
   "id": "file:/user_summary.json",
   "type": "object",
   "required": [
+    "type",
     "email",
     "username",
     "title",
@@ -13,6 +14,7 @@
     "teamlead_of"
   ],
   "properties": {
+    "type": { "type": "string" },
     "email": { "type": "string" },
     "username": { "type": "string" },
     "title": { "type": "string" },

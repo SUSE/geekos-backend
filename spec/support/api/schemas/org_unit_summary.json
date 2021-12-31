@@ -2,6 +2,7 @@
   "id": "file:/org_unit_summary.json",
   "type": "object",
   "required": [
+    "type",
     "id",
     "name",
     "short_description",
@@ -12,6 +13,7 @@
   ],
   "properties": {
     "id": { "type": "string" },
+    "type": { "type": "string" },
     "name": { "type": "string" },
     "short_description": { "type": "string" },
     "img": { "type": [ "string", "null" ] },

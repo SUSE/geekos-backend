@@ -2,6 +2,6 @@
   "id": "file:/search_results.json",
   "type": "array",
   "items": {
-    "$ref": "file:/user.json#"
+    "$ref": "file:/user_summary.json#"
   }
 }

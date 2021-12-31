@@ -1,6 +1,10 @@
 class UserSummarySerializer < ActiveModel::Serializer
-  attributes :email, :username, :title, :fullname, :phone, :gravatar, :picture_160,
+  attributes :type, :email, :username, :title, :fullname, :phone, :gravatar, :picture_160,
              :picture_25, :email, :teamlead_of
+
+  def type
+    'user'
+  end
 
   def picture_160
     object.img&.thumb('160x160#')&.url(host: '')
