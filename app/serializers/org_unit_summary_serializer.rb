@@ -11,9 +11,9 @@ class OrgUnitSummarySerializer < ActiveModel::Serializer
 
   def children
     if @instance_options[:children_depth].nil?
-      object.children.map { |o| OrgUnitSummarySerializer.new(o) }
+      object.children.sort_by(&:name).map { |o| OrgUnitSummarySerializer.new(o) }
     elsif (@instance_options[:children_depth]).positive?
-      object.children.map do |o|
+      object.children.sort_by(&:name).map do |o|
         OrgUnitSummarySerializer.new(o, children_depth: @instance_options[:children_depth] - 1)
       end
     else
