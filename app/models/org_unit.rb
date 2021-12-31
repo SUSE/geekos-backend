@@ -4,6 +4,7 @@ class OrgUnit
   include Mongoid::Timestamps
   include Mongoid::Tree
   include Mongoid::Tree::Traversal
+  include Mongoid::AuditLog
   extend Dragonfly::Model
 
   DEPTH_NAMES = {

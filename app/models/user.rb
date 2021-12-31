@@ -2,6 +2,7 @@ class User
   include ActiveModel::Model
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::AuditLog
   extend Dragonfly::Model
 
   INDEXED_FIELDS = [:title, :notes, :accounts, 'ldap.title', 'ldap.mail',

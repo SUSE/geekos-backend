@@ -1,4 +1,6 @@
 class Api::TeamsController < Api::BaseController
+  around_action :audit_log, only: :update
+
   def index
     render json: OrgUnit.all, status: :ok
   end

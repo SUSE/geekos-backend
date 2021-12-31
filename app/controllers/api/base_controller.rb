@@ -17,4 +17,8 @@ class Api::BaseController < ActionController::API
                       user
                     end
   end
+
+  def audit_log(&block)
+    Mongoid::AuditLog.record(current_user, &block)
+  end
 end

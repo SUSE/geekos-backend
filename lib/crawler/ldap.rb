@@ -14,7 +14,8 @@ class Crawler::Ldap < Crawler::BaseCrawler
     if u.new_record?
       log.info "LDAP -> New user, employeenumber: #{user_hash['employeenumber']} (#{user_hash['samaccountname']})"
     end
-    attributes_before = u.attributes
+    attributes_before = u.attributes.clone
+    attributes_before['ldap'] = u.attributes['ldap'].clone
 
     if user_hash['manager'].present?
       manager_hash = suse_ldap_users.find { |lu| lu['cn'] == user_hash['manager'].match(/cn=(.+?),/i)[1] }
@@ -35,7 +36,7 @@ class Crawler::Ldap < Crawler::BaseCrawler
       log.info "LDAP -> Updating user #{user_hash['samaccountname']} (#{user_hash['employeenumber']}) " \
                "#{Hashdiff.diff(attributes_before, u.attributes)}"
     end
-    u.save!
+    Mongoid::AuditLog.record { u.save! }
     u
   end
 

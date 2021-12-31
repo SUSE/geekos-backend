@@ -21,10 +21,10 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     OrgUnit.all.each do |unit|
       if unit.lead.nil?
         log.warn "OrgTree/Cleanup -> Dropping OrgUnit##{unit.id} as it does not have a lead"
-        unit.destroy
+        Mongoid::AuditLog.record { unit.destroy }
       elsif unit.members.empty?
         log.warn "OrgTree/Cleanup -> Dropping empty OrgUnit##{unit.id}"
-        unit.destroy
+        Mongoid::AuditLog.record { unit.destroy }
       end
     end
   end
@@ -53,7 +53,7 @@ class Crawler::OrgTree < Crawler::BaseCrawler
             org.parent_id = parent.id
           end
           log.info "OrgTree -> New org unit with lead #{user.username}" if org.new_record?
-          org.save! && user.save!
+          Mongoid::AuditLog.record { org.save! && user.save! }
           set_default_orgunit_name(org, user) if org.name.blank?
         end
       else
@@ -69,7 +69,7 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     return if unit.members.include?(user)
 
     log.info "OrgTree -> Adding #{user.username} to orgunit '#{unit.name}'"
-    unit.members << user
+    Mongoid::AuditLog.record { unit.members << user }
   end
 
   def set_default_orgunit_name(org, leader)
@@ -84,6 +84,6 @@ class Crawler::OrgTree < Crawler::BaseCrawler
              "#{leader.fullname}'s team"
            end
     log.info "OrgTree -> Setting team name '#{name}'"
-    org.update!(name: name)
+    Mongoid::AuditLog.record { org.update!(name: name) }
   end
 end

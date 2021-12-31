@@ -1,4 +1,6 @@
 class Api::UsersController < Api::BaseController
+  around_action :audit_log, only: %i[update tags]
+
   def show
     user = User.find(params[:id])
     if user

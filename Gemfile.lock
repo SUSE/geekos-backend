@@ -162,6 +162,8 @@ GEM
       activemodel (>= 5.1, < 6.2)
       mongo (>= 2.10.5, < 3.0.0)
       ruby2_keywords (~> 0.0.5)
+    mongoid-audit_log (0.6.1)
+      mongoid (>= 7.0)
     mongoid-compatibility (0.5.1)
       activesupport
       mongoid (>= 2.0)
@@ -367,6 +369,7 @@ DEPENDENCIES
   jsonlint
   listen
   mongoid
+  mongoid-audit_log
   mongoid-rspec!
   mongoid-tree
   net-ldap
