@@ -14,8 +14,8 @@ module MongoAttrMapping
       return unless overwriteable
 
       define_method "#{name}=" do |value|
-        # reset value if it's the same as the shadowed field
-        value = nil if value == read_attribute(target)
+        # reset value if it's the same as the shadowed field or empty
+        value = nil if value == read_attribute(target) || value.blank?
         self[name] = value
       end
       field(name, type: String)
