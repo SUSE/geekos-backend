@@ -14,8 +14,7 @@ class Crawler::Ldap < Crawler::BaseCrawler
     if u.new_record?
       log.info "LDAP -> New user, employeenumber: #{user_hash['employeenumber']} (#{user_hash['samaccountname']})"
     end
-    attributes_before = u.attributes.clone
-    attributes_before['ldap'] = u.attributes['ldap'].clone
+    attributes_before = u.attributes['ldap'].clone
 
     if user_hash['manager'].present?
       manager_hash = suse_ldap_users.find { |lu| lu['cn'] == user_hash['manager'].match(/cn=(.+?),/i)[1] }
@@ -34,7 +33,7 @@ class Crawler::Ldap < Crawler::BaseCrawler
     u['ldap'] = user_hash
     if u.changed.present?
       log.info "LDAP -> Updating user #{user_hash['samaccountname']} (#{user_hash['employeenumber']}) " \
-               "#{Hashdiff.diff(attributes_before, u.attributes)}"
+               "#{deep_diff(attributes_before, u.attributes['ldap'])}"
     end
     Mongoid::AuditLog.record { u.save! }
     u
@@ -67,5 +66,18 @@ class Crawler::Ldap < Crawler::BaseCrawler
   def users_to_cleanup
     ldap_ids = suse_ldap_users.map { |x| x['employeenumber'] }
     User.not.in('ldap.employeenumber': ldap_ids).to_a
+  end
+
+  def deep_diff(a, b)
+    (a.keys | b.keys).each_with_object({}) do |k, diff|
+      if a[k] != b[k]
+        diff[k] = if a[k].is_a?(Hash) && b[k].is_a?(Hash)
+                    deep_diff(a[k], b[k])
+                  else
+                    [a[k], b[k]]
+                  end
+      end
+      diff
+    end
   end
 end
