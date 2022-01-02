@@ -9,13 +9,25 @@ class Crawler::Ldap < Crawler::BaseCrawler
     nil
   end
 
+  private
+
   def store_user(user_hash)
     u = User.find(user_hash['employeenumber']) || User.new
     if u.new_record?
       log.info "LDAP -> New user, employeenumber: #{user_hash['employeenumber']} (#{user_hash['samaccountname']})"
     end
     attributes_before = u.attributes['ldap'].clone
+    u['ldap'] = user_hash
+    set_manager(u, user_hash)
+    if u.changed.present?
+      log.info "LDAP -> Updating user #{user_hash['samaccountname']} (#{user_hash['employeenumber']}) " \
+               "#{deep_diff(attributes_before, u.attributes['ldap'])}"
+    end
+    Mongoid::AuditLog.record { u.save! }
+    u
+  end
 
+  def set_manager(user, user_hash)
     if user_hash['manager'].present?
       manager_hash = suse_ldap_users.find { |lu| lu['cn'] == user_hash['manager'].match(/cn=(.+?),/i)[1] }
     end
@@ -23,20 +35,12 @@ class Crawler::Ldap < Crawler::BaseCrawler
       # skip CEO manager self-reference
       unless manager_hash['employeenumber'] == user_hash['employeenumber']
         manager = User.find(manager_hash['employeenumber']) || store_user(manager_hash)
-        u.manager = manager
+        user.manager = manager
       end
     else
-      u.manager = nil
+      user.manager = nil
       log.warn "LDAP -> Manager '#{user_hash['manager']}' not found for employee '#{user_hash['samaccountname']}'"
     end
-
-    u['ldap'] = user_hash
-    if u.changed.present?
-      log.info "LDAP -> Updating user #{user_hash['samaccountname']} (#{user_hash['employeenumber']}) " \
-               "#{deep_diff(attributes_before, u.attributes['ldap'])}"
-    end
-    Mongoid::AuditLog.record { u.save! }
-    u
   end
 
   def cleanup
@@ -50,8 +54,6 @@ class Crawler::Ldap < Crawler::BaseCrawler
       user.destroy!
     end
   end
-
-  private
 
   def suse_ldap_users
     @suse_ldap_users ||= ::Ldap.active_users.select { |u| u['employeenumber'].present? }

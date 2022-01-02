@@ -25,6 +25,7 @@ class Ldap
       @desired_attr = %w[
         title
         displayName
+        cn
         co
         employeenumber
         samaccountname
