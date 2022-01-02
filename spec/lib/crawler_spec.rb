@@ -7,6 +7,7 @@ describe Crawler do
     it {
       expect(crawler).to eq [
         Crawler::Ldap,
+        Crawler::Okta,
         Crawler::OrgTree
       ]
     }

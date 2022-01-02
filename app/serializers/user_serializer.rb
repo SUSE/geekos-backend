@@ -3,7 +3,8 @@ class UserSerializer < UserSummarySerializer
              :fullname, :phone,
              :country, :notes, :gravatar, :picture_160, :picture_25,
              :location, :room, :coordinates,
-             :birthday, :teamlead_of, :org_unit, :tags, :admin, :accounts
+             :birthday, :teamlead_of, :org_unit, :tags, :admin,
+             :opensuse_username, :github_usernames, :trello_username
 
   def tags
     object.tags.pluck(:name)

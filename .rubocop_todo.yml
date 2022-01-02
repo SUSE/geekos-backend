@@ -54,5 +54,8 @@ ThreadSafety/InstanceVariableInClassMethod:
 Metrics/AbcSize:
   Exclude:
     - 'lib/crawler/fuze.rb'
-    - 'lib/crawler/ldap.rb'
     - 'lib/crawler/org_tree.rb'
+
+Naming/MethodParameterName:
+  Exclude:
+  - 'lib/crawler.rb'

@@ -6,8 +6,9 @@ class User
   include MongoAttrMapping
   extend Dragonfly::Model
 
-  INDEXED_FIELDS = [:title, :notes, :accounts, 'ldap.title', 'ldap.mail',
-                    'ldap.samaccountname', 'ldap.displayname'].freeze
+  INDEXED_FIELDS = [:title, :notes, :opensuse_username, 'ldap.title', 'ldap.mail',
+                    'ldap.samaccountname', 'ldap.displayname', 'okta.githubUsername',
+                    'okta.trelloId'].freeze
   include MongoFtSearchable
 
   after_initialize :reset_auth_token, if: :new_record?
@@ -24,22 +25,20 @@ class User
   field :coordinates, type: String
   field :notes, type: String
   field :birthday, type: String
-  # account usernames: github, trello, opensuse, ucs
-  field :accounts, type: Hash, default: {}
+  field :opensuse_username, type: String
 
   # internal
   field :auth_token, type: String
   field :admin, type: Boolean
-  # http://markevans.github.io/dragonfly/
-  dragonfly_accessor :img
+  dragonfly_accessor :img # http://markevans.github.io/dragonfly/
   field :img_uid, type: String
+  alias history audit_log_entries
 
+  # Synced attributes
   field :ldap, type: Hash, default: {}
+  field :okta, type: Hash, default: {}
 
-  validates :auth_token, uniqueness: true, presence: true
-  validates :coordinates, format: { with: /-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}/,
-                                    message: "requires format like '49.446444, 11.330570'" }, allow_blank: true
-
+  # Mappings:
   attribute_mapping :title, 'ldap.title', overwriteable: true
   attribute_mapping :phone, 'ldap.telephonenumber', overwriteable: true
   attribute_mapping :email, 'ldap.mail'
@@ -48,6 +47,12 @@ class User
   attribute_mapping :phone, 'ldap.telephonenumber'
   attribute_mapping :country, 'ldap.co'
   attribute_mapping :employeenumber, 'ldap.employeenumber'
+  attribute_mapping :github_usernames, 'okta.githubUsername'
+  attribute_mapping :trello_username, 'okta.trelloId'
+
+  validates :auth_token, uniqueness: true, presence: true
+  validates :coordinates, format: { with: /-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}/,
+                                    message: "requires format like '49.446444, 11.330570'" }, allow_blank: true
 
   def self.find(ident)
     query = ident.numeric? ? { 'ldap.employeenumber': ident } : { 'ldap.samaccountname': ident }

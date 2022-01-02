@@ -67,17 +67,4 @@ class Crawler::Ldap < Crawler::BaseCrawler
     ldap_ids = suse_ldap_users.map { |x| x['employeenumber'] }
     User.not.in('ldap.employeenumber': ldap_ids).to_a
   end
-
-  def deep_diff(a, b)
-    (a.keys | b.keys).each_with_object({}) do |k, diff|
-      if a[k] != b[k]
-        diff[k] = if a[k].is_a?(Hash) && b[k].is_a?(Hash)
-                    deep_diff(a[k], b[k])
-                  else
-                    [a[k], b[k]]
-                  end
-      end
-      diff
-    end
-  end
 end

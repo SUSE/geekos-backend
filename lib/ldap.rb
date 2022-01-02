@@ -23,23 +23,13 @@ class Ldap
       @password = ENV['geekos_ldap_password']
 
       @desired_attr = %w[
-        cn
-        c
-        st
         title
-        physicaldeliveryofficename
         displayName
         co
-        company
-        streetaddress
         employeenumber
-        employeetype
         samaccountname
         mail
         manager
-        employeestatus
-        sitelocation
-        employeestartdate
         telephoneNumber
       ]
     end

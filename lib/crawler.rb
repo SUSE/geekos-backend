@@ -1,6 +1,7 @@
 module Crawler
   CRAWLERS = %i[
     ldap
+    okta
     org_tree
   ].freeze
 
@@ -12,6 +13,17 @@ module Crawler
     def run
       log.info '-' * 10
       log.info "#{self.class.name} started crawling"
+    end
+
+    protected
+
+    def deep_diff(a, b)
+      (a.keys | b.keys).each_with_object({}) do |k, diff|
+        if a[k] != b[k]
+          diff[k] = a[k].is_a?(Hash) && b[k].is_a?(Hash) ? deep_diff(a[k], b[k]) : [a[k], b[k]]
+        end
+        diff
+      end
     end
   end
 

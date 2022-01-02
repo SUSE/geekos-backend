@@ -7,6 +7,9 @@
 
 # see also https://docs.openathens.net/display/public/OAAccess/Ruby+OpenID+Connect+example
 # https://github.com/onelogin/onelogin-oidc-ruby/blob/master/1.%20Auth%20Flow/app/helpers/sessions_helper.rb
+# Okta docs:
+# https://developer.okta.com/docs/reference/api/oidc/
+
 class OicClient
   def initialize(redirect_uri)
     @provider_uri = ENV['oic_provider_url']
