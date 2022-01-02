@@ -3,6 +3,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::AuditLog
+  include MongoAttrMapping
   extend Dragonfly::Model
 
   INDEXED_FIELDS = [:title, :notes, :accounts, 'ldap.title', 'ldap.mail',
@@ -33,32 +34,20 @@ class User
   dragonfly_accessor :img
   field :img_uid, type: String
 
-  # ldap fields:
-  # (cn c st title physicaldeliveryofficename displayName co company streetaddress
-  #  employeenumber employeetype samaccountname mail manager employeestatus sitelocation
-  #  employeestartdate telephoneNumber manager_employeenumber)
   field :ldap, type: Hash, default: {}
 
   validates :auth_token, uniqueness: true, presence: true
   validates :coordinates, format: { with: /-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}/,
                                     message: "requires format like '49.446444, 11.330570'" }, allow_blank: true
 
-  ldap_attributes = { title: :title,
-                      email: :mail,
-                      username: :samaccountname,
-                      fullname: :displayname,
-                      phone: :telephonenumber,
-                      country: :co,
-                      employeenumber: :employeenumber }
-
-  # mapping to ldap fields with option to overwrite LDAP_OVERWRITEABLE_FIELDS in User
-  LDAP_OVERWRITEABLE_FIELDS = %i[title telephonenumber].freeze
-  ldap_attributes.each do |mapping|
-    define_method mapping.first do
-      LDAP_OVERWRITEABLE_FIELDS.include?(mapping.last) ? self[mapping.first] || ldap[mapping.last] : ldap[mapping.last]
-    end
-    field(mapping.first, type: String) if LDAP_OVERWRITEABLE_FIELDS.include?(mapping.last)
-  end
+  attribute_mapping :title, 'ldap.title', overwriteable: true
+  attribute_mapping :phone, 'ldap.telephonenumber', overwriteable: true
+  attribute_mapping :email, 'ldap.mail'
+  attribute_mapping :username, 'ldap.samaccountname'
+  attribute_mapping :fullname, 'ldap.displayname'
+  attribute_mapping :phone, 'ldap.telephonenumber'
+  attribute_mapping :country, 'ldap.co'
+  attribute_mapping :employeenumber, 'ldap.employeenumber'
 
   def self.find(ident)
     query = ident.numeric? ? { 'ldap.employeenumber': ident } : { 'ldap.samaccountname': ident }

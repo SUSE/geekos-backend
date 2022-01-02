@@ -22,7 +22,7 @@ FactoryBot.define do
           co: FFaker::Address.country_code,
           title: FFaker::Book.title,
           displayname: "#{FFaker::Name.first_name} #{FFaker::Name.last_name}",
-          cn: 'de' }
+          cn: 'de' }.stringify_keys
       end
     end
 
