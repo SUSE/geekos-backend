@@ -11,6 +11,7 @@
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/lib/crawler/ldap_spec.rb'
+    - 'spec/lib/crawler/okta_spec.rb'
     - 'spec/requests/api/user_spec.rb'
 
 # Offense count: 1
@@ -59,3 +60,7 @@ Metrics/AbcSize:
 Naming/MethodParameterName:
   Exclude:
   - 'lib/crawler.rb'
+
+Style/OpenStructUse:
+  Exclude:
+  - 'spec/lib/crawler/okta_spec.rb'
