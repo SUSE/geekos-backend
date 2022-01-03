@@ -22,7 +22,7 @@ class Crawler::Okta < Crawler::BaseCrawler
       user = User.find_by('ldap.mail': okta_user.profile.email)
       if user
         attributes_before = user.attributes['okta'].clone
-        okta_atts = %i[githubUsername trelloId]
+        okta_atts = %i[githubUsername trelloId WorkLocationType siteLocation office employeeStartDate costCenter]
         user['okta'] = okta_user.profile.to_h.slice(*okta_atts)
         if user.changed.present?
           log.info "Okta -> Updating user #{user.username}: " \
