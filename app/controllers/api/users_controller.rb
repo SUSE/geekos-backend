@@ -1,5 +1,5 @@
 class Api::UsersController < Api::BaseController
-  around_action :audit_log, only: %i[update tags]
+  around_action :audit_log, only: %i[update]
 
   def show
     user = User.find(params[:id])
@@ -17,21 +17,12 @@ class Api::UsersController < Api::BaseController
       user.img = params[:avatar].read
       user.img.name = "upload.#{user.employeenumber}.#{user.img.format}"
     end
-    # TODO: update params[:location]
+    user.update(tags: tags_params.map { |t| Tag.find_or_create_by(name: t) })
     if user.update(user_params)
       render json: user
     else
       render json: { errors: user.errors }, status: :unprocessable_entity
     end
-  end
-
-  def tags
-    user = User.find(params[:id])
-    authorize! :update, user
-    tags = Tag.in(name: tags_params)
-    user.tags = tags
-    user.save
-    render json: user
   end
 
   def search
@@ -64,11 +55,12 @@ class Api::UsersController < Api::BaseController
       :location,
       :notes,
       :title,
-      :phone
+      :phone,
+      :opensuse_username
     )
   end
 
   def tags_params
-    params.permit(tags: [])[:tags]
+    params['tags'].to_s.split(',').map(&:downcase).compact_blank
   end
 end

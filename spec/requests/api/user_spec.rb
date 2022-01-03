@@ -75,8 +75,8 @@ describe User, type: 'request' do
 
     context 'add new tags' do
       subject(:tag) do
-        post(
-          tags_api_user_path(user.employeenumber),
+        patch(
+          api_user_path(user.employeenumber),
           params: { tags: %w[foo bar baz] },
           headers: headers
         )
@@ -97,9 +97,9 @@ describe User, type: 'request' do
 
     context 'removes all tags' do
       subject(:tag) do
-        post(
-          tags_api_user_path(user.employeenumber),
-          params: { tags: [] },
+        patch(
+          api_user_path(user.employeenumber),
+          params: {},
           headers: headers
         )
         json_response

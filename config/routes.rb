@@ -14,9 +14,6 @@ Rails.application.routes.draw do
         get :search
         get :verify_token
       end
-      member do
-        post :tags
-      end
     end
     resources :teams, only: %i[index show update] do
       collection do
