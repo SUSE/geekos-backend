@@ -39,6 +39,9 @@ Metrics/BlockLength:
 RSpec/AnyInstance:
   Enabled: false
 
+RSpec/MessageChain:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

@@ -20,10 +20,10 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     log.info 'OrgTree -> Cleaning up empty org units'
     OrgUnit.all.each do |unit|
       if unit.lead.nil?
-        log.warn "OrgTree/Cleanup -> Dropping OrgUnit##{unit.id} as it does not have a lead"
+        log.warn "OrgTree/Cleanup -> Dropping OrgUnit '#{unit.name}' ##{unit.id} as it does not have a lead"
         Mongoid::AuditLog.record { unit.destroy }
       elsif unit.members.empty?
-        log.warn "OrgTree/Cleanup -> Dropping empty OrgUnit##{unit.id}"
+        log.warn "OrgTree/Cleanup -> Dropping empty OrgUnit '#{unit.name}' ##{unit.id}"
         Mongoid::AuditLog.record { unit.destroy }
       end
     end
@@ -78,11 +78,9 @@ class Crawler::OrgTree < Crawler::BaseCrawler
       '(Senior )?Manager[,\- ]*(of)?', 'Team[ ]?lead(er)?[,\- ]*(of)?(for)?',
       'Director[,\- ]*(of)?', '^VP[,\- ]*[of]*', 'Vice President[ of]?'
     ]
-    name = if (title = leader_titles.find { |lt| leader.title =~ /#{lt}/i })
-             leader.title.gsub(/#{title}/i, '').strip
-           else
-             "#{leader.fullname}'s team"
-           end
+    title_match = leader_titles.find { |lt| leader.title =~ /#{lt}/i }
+    name = leader.title.gsub(/#{title_match}/i, '').strip if title_match
+    name = "#{leader.fullname}'s team" if name.blank?
     log.info "OrgTree -> Setting team name '#{name}'"
     Mongoid::AuditLog.record { org.update!(name: name) }
   end

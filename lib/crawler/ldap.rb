@@ -2,6 +2,10 @@ class Crawler::Ldap < Crawler::BaseCrawler
   def run
     super
 
+    # only store users from LDAP that are active in Okta:
+    okta_users = Crawler::Okta.new.okta_users
+    suse_ldap_users.select! { |u| okta_users.any? { |ou| ou.profile.email == u['mail'] } }
+
     suse_ldap_users.sort_by { |u| u['samaccountname'] }.each_with_index do |user_hash, _index|
       store_user(user_hash)
     end

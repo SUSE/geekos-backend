@@ -6,13 +6,19 @@ class Crawler::Okta < Crawler::BaseCrawler
 
     # https://developer.okta.com/docs/api/resources/users#list-users
     # single user: client.get_user(user.username).first
-    okta_users = client.list_users(paginate: true).first.to_a
-                       .sort_by { |u| u.profile.email }
-                       .select { |u| u.status == 'ACTIVE' }
     log.info "Okta -> Found #{okta_users.size} Okta users"
     update_users(okta_users)
     cleanup_deactivated_users(okta_users)
     nil
+  end
+
+  def okta_users
+    @okta_users ||= client.list_users(paginate: true,
+                                      content_type: "application/json; " \
+                                                    "okta-response=omitCredentials,omitCredentialsLinks")
+                          .first.to_a
+                          .sort_by { |u| u.profile.email }
+                          .select { |u| u.status == 'ACTIVE' }
   end
 
   private
@@ -37,7 +43,7 @@ class Crawler::Okta < Crawler::BaseCrawler
 
   def cleanup_deactivated_users(okta_users)
     deleted_emails = User.all.map(&:email) - okta_users.map { |u| u.profile.email }
-    raise "Too many users to delete (#{deleted_emails.size}), Okta issue?" if deleted_emails.size > 25
+    raise "Too many users to delete (#{deleted_emails.size}), Okta issue?" if deleted_emails.size > 500
 
     deleted_emails.each do |email|
       log.debug "Dropping deactivated user: #{email}"

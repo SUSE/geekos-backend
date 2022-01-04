@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe Crawler::Ldap do
   before do
-    allow(Ldap).to receive(:active_users).and_return(fake_users)
+    allow(Ldap).to receive_message_chain(:active_users, :select).and_return(fake_users)
+    allow(Crawler::Okta).to receive_message_chain(:new, :okta_users).and_return([])
+    allow(fake_users).to receive(:select!).and_return(fake_users)
   end
 
   describe '#run' do
