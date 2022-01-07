@@ -54,7 +54,7 @@ class Crawler::Ldap < Crawler::BaseCrawler
     raise "Too many missing users (#{users_to_cleanup.size}), LDAP issue?" if users_to_cleanup.size > 25
 
     users_to_cleanup.each do |user|
-      log.info "LDAP -> destroying #{user.fullname}: #{user.employeenumber}"
+      log.info "LDAP -> retiring #{user.fullname}: #{user.employeenumber}"
       user.destroy!
     end
   end
