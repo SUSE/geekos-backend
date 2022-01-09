@@ -6,33 +6,40 @@ git_source(:github) do |repo_name|
 end
 
 # Core
+gem 'awesome_print'
 gem 'bootsnap', require: false
 gem 'puma'
 gem 'rails', '~> 6.1' # TODO: mongoid is not yet compatible with rails7
 
 # storage
-gem 'mongoid'
+gem 'mongoid', '~> 7.3.3'
+gem 'mongoid-audit_log'
 gem 'mongoid-tree', require: 'mongoid/tree'
 
-# Toppings
+# api
 gem 'active_model_serializers'
-gem 'awesome_print'
-gem 'cancancan'
-gem 'dragonfly'
-gem 'figaro'
-gem 'hashie'
-gem 'mongoid-audit_log'
-gem 'net-ldap'
-gem 'oj'
-gem 'oktakit'
-gem 'openid_connect'
 gem 'rack-cache', require: 'rack/cache'
 gem 'rack-cors'
+
+# config
+gem 'figaro'
+
+# crawlers
+gem 'net-ldap'
+gem 'oktakit'
 gem 'rest-client'
 gem 'rubytree'
 gem 'ruby-trello'
 
+# user pictures
+gem 'dragonfly'
+
+# login + permissions
+gem 'cancancan'
+gem 'openid_connect'
+
 group :development do
+  # watching for changed files
   gem 'listen'
 end
 
@@ -51,12 +58,13 @@ end
 
 group :test do
   gem 'database_cleaner-mongoid'
+  gem 'hashie'
   gem 'json_matchers'
   gem 'mongoid-rspec', github: 'mongoid-rspec/mongoid-rspec'
+  gem 'oj'
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'simplecov'
-  gem 'timecop'
   gem 'webmock'
 end

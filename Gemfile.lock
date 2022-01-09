@@ -349,7 +349,6 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     thor (1.1.0)
-    timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -392,7 +391,7 @@ DEPENDENCIES
   json_matchers
   jsonlint
   listen
-  mongoid
+  mongoid (~> 7.3.3)
   mongoid-audit_log
   mongoid-rspec!
   mongoid-tree
@@ -417,7 +416,6 @@ DEPENDENCIES
   rubytree
   shoulda-matchers
   simplecov
-  timecop
   webmock
 
 BUNDLED WITH
