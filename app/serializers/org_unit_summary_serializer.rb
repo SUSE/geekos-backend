@@ -1,5 +1,5 @@
 class OrgUnitSummarySerializer < ActiveModel::Serializer
-  attributes :type, :id, :name, :short_description, :img, :depth, :depth_name, :children
+  attributes :type, :id, :name, :short_description, :img, :children
 
   def type
     'orgunit'
