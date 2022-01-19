@@ -2,7 +2,7 @@ class UserSerializer < UserSummarySerializer
   attributes :employeenumber, :email, :username, :title,
              :fullname, :phone,
              :country, :notes, :gravatar, :picture_160, :picture_25,
-             :location, :room, :coordinates,
+             :location, :room, :coordinates, :join_date,
              :birthday, :teamlead_of, :org_unit, :tags, :admin,
              :opensuse_username, :github_usernames, :trello_username
 

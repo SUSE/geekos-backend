@@ -49,6 +49,7 @@ class User
   attribute_mapping :employeenumber, 'ldap.employeenumber'
   attribute_mapping :github_usernames, 'okta.githubUsername'
   attribute_mapping :trello_username, 'okta.trelloId'
+  attribute_mapping :join_date, 'okta.employeeStartDate'
 
   validates :auth_token, uniqueness: true, presence: true
   validates :coordinates, format: { with: /-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}/,
@@ -56,7 +57,7 @@ class User
 
   def self.find(ident)
     query = ident.numeric? ? { 'ldap.employeenumber': ident } : { 'ldap.samaccountname': ident }
-    User.find_by(query)
+    find_by(query) || find_by(id: ident)
   end
 
   def gravatar

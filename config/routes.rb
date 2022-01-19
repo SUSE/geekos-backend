@@ -28,5 +28,8 @@ Rails.application.routes.draw do
     resources :locations, only: %i[show index] do
       resources :rooms, only: [:show], constraints: { id: /[0-9A-Za-z\-.20%]+/ }, format: false
     end
+
+    get '/meta/users', to: 'meta#users'
+    get '/meta/changes', to: 'meta#changes'
   end
 end
