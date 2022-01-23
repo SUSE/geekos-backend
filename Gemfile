@@ -20,6 +20,7 @@ gem 'mongoid-tree', require: 'mongoid/tree'
 gem 'active_model_serializers'
 gem 'rack-cache', require: 'rack/cache'
 gem 'rack-cors'
+gem 'graphql_rails'
 
 # config
 gem 'figaro'

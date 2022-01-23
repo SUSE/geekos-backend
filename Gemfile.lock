@@ -139,6 +139,10 @@ GEM
       thor (>= 0.14.0, < 2)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    graphql (1.13.6)
+    graphql_rails (2.1.0)
+      activesupport (>= 4)
+      graphql (~> 1.12, >= 1.12.4)
     hashdiff (1.0.1)
     hashie (5.0.0)
     http-accept (1.7.0)
@@ -387,6 +391,7 @@ DEPENDENCIES
   factory_bot_rails
   ffaker
   figaro
+  graphql_rails
   hashie
   json_matchers
   jsonlint

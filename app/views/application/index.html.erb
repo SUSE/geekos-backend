@@ -40,3 +40,14 @@
 <br/>
 <a href="<%= api_meta_changes_path %>">/api/meta/changes</a> - List changes (admin only)
 <br/>
+
+<h4>GraphQL API Spec</h4>
+
+<pre>
+curl 'http://localhost:3000/graphql' \
+     -X POST \
+     -H 'content-type: application/json' \
+     --data '{
+       "query": "{ user (ident: \"tschmidt\") { email type title picture (size: 100) leadOfOrgUnit { name } } }"
+              }' | jq
+</pre>

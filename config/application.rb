@@ -32,6 +32,7 @@ module HiGecko
     # Custom directories with classes and modules you want to be autoloadable.
     config.eager_load_paths += %W[
       #{config.root}/lib
+      #{config.root}/app/graphql
     ]
   end
 end

@@ -1,9 +1,10 @@
-# For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
   root to: 'application#index'
 
   get '/sessions/init', to: 'sessions#init'
   get '/sessions/login', to: 'sessions#login'
+
+  post "/graphql", to: "graphql#execute"
 
   namespace :api do
     resource :search, only: [:show]
