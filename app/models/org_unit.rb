@@ -16,6 +16,7 @@ class OrgUnit
     # https://samesystem.github.io/graphql_rails/#/components/model
     # incoming graphql attributes need to be camel case and will get auto transformed to '_'
     c.attribute :type
+    c.attribute :id
     c.attribute :name
   end
 

@@ -30,11 +30,24 @@ class User
     c.attribute :username, type: :string
     c.attribute :title, type: :string
     c.attribute :fullname, type: :string
+    c.attribute :country, type: :string
+    c.attribute :employeenumber, type: :string
     c.attribute :phone, type: :string
+    c.attribute :notes, type: :string
+    c.attribute :github_usernames, type: :string
+    c.attribute :trello_username, type: :string
+    c.attribute :opensuse_username, type: :string
     c.attribute(:picture).permit(size: :int)
     c.attribute :lead_of_org_unit, type: OrgUnit
+    c.attribute :org_unit, type: OrgUnit
+    c.attribute :tags, type: '[Tag]'
+    c.attribute :admin, type: :boolean
+    c.attribute :coordinates, type: :string
+    c.attribute :location, type: Location
+    c.attribute :room, type: :string
+    c.attribute :birthday, type: :string
+    c.attribute :join_date, type: :string
   end
-
 
   # user attributes:
   field :room, type: String
@@ -60,7 +73,6 @@ class User
   attribute_mapping :email, 'ldap.mail'
   attribute_mapping :username, 'ldap.samaccountname'
   attribute_mapping :fullname, 'ldap.displayname'
-  attribute_mapping :phone, 'ldap.telephonenumber'
   attribute_mapping :country, 'ldap.co'
   attribute_mapping :employeenumber, 'ldap.employeenumber'
   attribute_mapping :github_usernames, 'okta.githubUsername'
@@ -92,7 +104,7 @@ class User
     self.class.name.downcase
   end
 
-  def picture(size=50)
+  def picture(size: 50)
     img&.thumb("#{size}x#{size}#")&.url(host: '')
   end
 

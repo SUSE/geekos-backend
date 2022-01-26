@@ -43,11 +43,12 @@
 
 <h4>GraphQL API Spec</h4>
 
+Query user:
 <pre>
 curl 'http://localhost:3000/graphql' \
-     -X POST \
-     -H 'content-type: application/json' \
-     --data '{
-       "query": "{ user (ident: \"tschmidt\") { email type title picture (size: 100) leadOfOrgUnit { name } } }"
-              }' | jq
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+   "query": "{ user (ident: \"tschmidt\") { email type title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
+          }' | jq
 </pre>
