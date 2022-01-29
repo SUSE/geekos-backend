@@ -17,6 +17,7 @@ class Crawler::Delve < Crawler::BaseCrawler
 
     def initialize(user)
       @user = user
+      raise "ENV['geekos_delve_auth_cookie'] not set!" unless ENV['geekos_delve_auth_cookie'].present?
     end
 
     def download!
@@ -26,6 +27,7 @@ class Crawler::Delve < Crawler::BaseCrawler
       elsif same_image?
         Crawler.logger.debug "Same image stored locally as in Delve ...skip"
       else
+        Crawler.logger.info "Storing image for #{user.email}"
         handle_filename_and_save
       end
     end
@@ -34,8 +36,10 @@ class Crawler::Delve < Crawler::BaseCrawler
     def remote_data
       @remote_data ||= RestClient.get(delve_image_url,
                                       { cookies: { "X-Delve-AuthEurS" => ENV['geekos_delve_auth_cookie'] } }).body
-    rescue StandardError
+    rescue RestClient::NotFound
       nil
+    rescue StandardError => e
+      Crawler.logger.warn "Error loading image: #{e.message}"
     end
 
     def same_image?
