@@ -17,7 +17,7 @@ class Crawler::Delve < Crawler::BaseCrawler
 
     def initialize(user)
       @user = user
-      raise "ENV['geekos_delve_auth_cookie'] not set!" unless ENV['geekos_delve_auth_cookie'].present?
+      raise "ENV['geekos_delve_auth_cookie'] not set!" if ENV['geekos_delve_auth_cookie'].blank?
     end
 
     def download!

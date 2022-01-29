@@ -41,9 +41,13 @@
 <a href="<%= api_meta_changes_path %>">/api/meta/changes</a> - List changes (admin only)
 <br/>
 
-<h4>GraphQL API Spec</h4>
+<h3>GraphQL API</h3>
 
-Query user:
+/graphiql
+
+<h3>Queries<h4>
+
+Example call:
 <pre>
 curl 'http://localhost:3000/graphql' \
   -X POST \
@@ -52,3 +56,5 @@ curl 'http://localhost:3000/graphql' \
    "query": "{ user (ident: \"tschmidt\") { email type title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
           }' | jq
 </pre>
+
+<h3>Mutations<h4>

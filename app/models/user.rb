@@ -20,35 +20,6 @@ class User
   belongs_to :org_unit, optional: true, inverse_of: :members
   belongs_to :lead_of_org_unit, class_name: 'OrgUnit', optional: true, inverse_of: :lead
 
-  include GraphqlRails::Model
-
-  graphql do |c|
-    # https://samesystem.github.io/graphql_rails/#/components/model
-    # incoming graphql attributes need to be camel case and will get auto transformed to '_'
-    c.attribute :type
-    c.attribute :email, type: :string
-    c.attribute :username, type: :string
-    c.attribute :title, type: :string
-    c.attribute :fullname, type: :string
-    c.attribute :country, type: :string
-    c.attribute :employeenumber, type: :string
-    c.attribute :phone, type: :string
-    c.attribute :notes, type: :string
-    c.attribute :github_usernames, type: :string
-    c.attribute :trello_username, type: :string
-    c.attribute :opensuse_username, type: :string
-    c.attribute(:picture).permit(size: :int)
-    c.attribute :lead_of_org_unit, type: OrgUnit
-    c.attribute :org_unit, type: OrgUnit
-    c.attribute :tags, type: '[Tag]'
-    c.attribute :admin, type: :boolean
-    c.attribute :coordinates, type: :string
-    c.attribute :location, type: Location
-    c.attribute :room, type: :string
-    c.attribute :birthday, type: :string
-    c.attribute :join_date, type: :string
-  end
-
   # user attributes:
   field :room, type: String
   field :coordinates, type: String
@@ -100,12 +71,7 @@ class User
     self.auth_token = SecureRandom.hex unless auth_token
   end
 
-  def type
-    self.class.name.downcase
-  end
-
   def picture(size: 50)
     img&.thumb("#{size}x#{size}#")&.url(host: '')
   end
-
 end

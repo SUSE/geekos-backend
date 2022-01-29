@@ -23,6 +23,12 @@ RSpec/NestedGroups:
 RSpec/MultipleExpectations:
   Max: 4
 
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/DescribeClass:
+  Enabled: false
+
 # Mongoid doesn't need/have `dependent: nil` for example
 Rails/HasManyOrHasOneDependent:
   Enabled: false

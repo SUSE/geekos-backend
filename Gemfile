@@ -18,9 +18,9 @@ gem 'mongoid-tree', require: 'mongoid/tree'
 
 # api
 gem 'active_model_serializers'
+gem 'graphql'
 gem 'rack-cache', require: 'rack/cache'
 gem 'rack-cors'
-gem 'graphql_rails'
 
 # config
 gem 'figaro'
@@ -48,8 +48,10 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'factory_bot_rails', require: false
   gem 'ffaker', require: false
+  gem 'graphiql-rails'
   gem 'jsonlint', require: false
   gem 'rubocop', require: false
+  gem 'rubocop-graphql', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rake', require: false
