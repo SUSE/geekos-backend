@@ -1,4 +1,6 @@
 class GeekosSchema < GraphQL::Schema
+  SCHEMA_FILE = Rails.root.join("app/graphql/schema.graphql")
+
   mutation(Types::MutationType)
   query(Types::QueryType)
 

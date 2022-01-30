@@ -22,7 +22,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   end
 
   def authorized?(ident:, **_attributes)
-    raise GraphQL::ExecutionError, "Please authenticate" unless context[:current_user]
+    raise GraphQL::ExecutionError, "Please authenticate with token" unless context[:current_user]
     return true if Ability.new(context[:current_user]).can?(:update, user(ident))
 
     raise GraphQL::ExecutionError, "You can only update your own user."
