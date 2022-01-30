@@ -51,7 +51,7 @@ class User
   attribute_mapping :join_date, 'okta.employeeStartDate'
 
   validates :auth_token, uniqueness: true, presence: true
-  validates :coordinates, format: { with: /-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}/,
+  validates :coordinates, format: { with: /\A-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}\z/,
                                     message: "requires format like '49.446444, 11.330570'" }, allow_blank: true
 
   def self.find(ident)

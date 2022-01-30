@@ -10,9 +10,9 @@ type Location {
 
 type Mutation {
   """
-  An example field added by the generator
+  Update a user
   """
-  testField: String!
+  user(birthday: String, coordinates: String, ident: String!, locationId: Int, notes: String, opensuseUsername: String, phone: String, room: String, title: String): User!
 }
 
 type OrgUnit {

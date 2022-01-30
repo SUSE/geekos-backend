@@ -53,8 +53,18 @@ curl 'http://localhost:3000/graphql' \
   -X POST \
   -H 'content-type: application/json' \
   --data '{
-   "query": "{ user (ident: \"tschmidt\") { email type title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
+   "query": "{ user (ident: \"tschmidt\") { email title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
           }' | jq
 </pre>
 
 <h3>Mutations<h4>
+
+Example call:
+<pre>
+curl 'http://localhost:3000/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+   "mutation": "{ user (ident: \"tschmidt\" phone: \"123\") { email title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
+          }' | jq
+</pre>

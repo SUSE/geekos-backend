@@ -8,6 +8,7 @@ module Types
       argument :ident, String, required: true
     end
     field :users, [Types::UserType], null: false
+
     def users
       User.all
     end
