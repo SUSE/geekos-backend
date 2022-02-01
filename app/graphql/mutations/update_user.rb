@@ -11,13 +11,15 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   argument :title, String, required: false
   argument :phone, String, required: false
   argument :location_id, Integer, required: false
-  # TODO: avatar, tags
+  argument :tags, String, required: false
+  # TODO: avatar
 
   type Types::UserType
 
   def resolve(ident:, **attributes)
     user = user(ident)
-    user.update!(attributes)
+    user.update!(mass_assign_attributes(attributes))
+    user.update(tags: tags_attributes(attributes).map { |t| Tag.find_or_create_by(name: t) })
     user
   end
 
@@ -29,6 +31,14 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   end
 
   private
+
+  def mass_assign_attributes(attributes)
+    attributes.reject{|k, _v| [:tags].include? k}.reject{|_k, v| v.blank?}
+  end
+
+  def tags_attributes(attributes)
+    attributes[:tags].to_s.split(',').map(&:strip).map(&:downcase).compact_blank
+  end
 
   def user(ident)
     @user ||= User.find(ident)
