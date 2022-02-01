@@ -1,3 +1,5 @@
 class ApplicationController < ActionController::Base
-  def index; end
+  def index
+    @graphql_schema = File.read(GeekosSchema::SCHEMA_FILE)
+  end
 end

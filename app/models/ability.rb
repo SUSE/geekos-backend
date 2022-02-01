@@ -1,13 +1,13 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
-    user ||= User.new
-    can :manage, :all if user.admin
-    can :read, :changes # if user.admin
-    can :update, User, employeenumber: user.employeenumber
+  def initialize(current_user)
+    current_user ||= User.new
+    can :manage, :all if current_user.admin
+    can :read, :changes # if current_user.admin
+    can :update, User, employeenumber: current_user.employeenumber
     can :update, OrgUnit do |org_unit|
-      [user.org_unit, user.lead_of_org_unit].compact.include? org_unit
+      [current_user.org_unit, current_user.lead_of_org_unit].compact.include? org_unit
     end
   end
 end

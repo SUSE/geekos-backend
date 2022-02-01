@@ -46,13 +46,13 @@ class Api::UsersController < Api::BaseController
 
   # user
   def user_params
-    params[:location] = params[:location].to_i
+    params[:location_id] = params[:location_id].to_i
     params.permit(
       :birthday,
       :img,
       :room,
       :coordinates,
-      :location,
+      :location_id,
       :notes,
       :title,
       :phone,

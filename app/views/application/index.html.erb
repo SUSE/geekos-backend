@@ -1,6 +1,6 @@
-<h3>API backend for Geekos</h3>
+<h2>API backend for Geekos</h2>
 
-<h4>API Spec</h4>
+<h3>REST API</h3>
 
 <a href="<%= api_search_path(q: 'test') %>">/api/search?q=search_term</a> - Global search (users + teams)
 <br/><br/>
@@ -40,3 +40,46 @@
 <br/>
 <a href="<%= api_meta_changes_path %>">/api/meta/changes</a> - List changes (admin only)
 <br/>
+
+<h3>GraphQL API</h3>
+
+<style>
+pre {
+  background-color: #c0c0c0;
+  margin: 10px;
+  padding: 10px
+}
+</style>
+
+Graphql browser: <a href="/graphiql">/graphiql</a>
+
+<h4>GraphQL Schema</h4>
+
+<pre>
+<%= @graphql_schema %>
+</pre>
+
+<h4>Queries</h4>
+
+User details:
+<pre>
+curl 'http://localhost:3000/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+   "query": "{ user (ident: \"tschmidt\") { email title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
+          }' | jq
+</pre>
+
+<h4>Mutations</h4>
+
+Update user:
+<pre>
+curl 'http://localhost:3000/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  -H 'Authorization: Token token=<your_auth_token>' \
+  --data '{
+    "query": "mutation { updateUser (ident: \"tschmidt\" title: \"Rocker\") { fullname email title } }"
+          }' | jq
+</pre>

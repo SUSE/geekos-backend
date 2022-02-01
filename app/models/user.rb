@@ -44,7 +44,6 @@ class User
   attribute_mapping :email, 'ldap.mail'
   attribute_mapping :username, 'ldap.samaccountname'
   attribute_mapping :fullname, 'ldap.displayname'
-  attribute_mapping :phone, 'ldap.telephonenumber'
   attribute_mapping :country, 'ldap.co'
   attribute_mapping :employeenumber, 'ldap.employeenumber'
   attribute_mapping :github_usernames, 'okta.githubUsername'
@@ -52,7 +51,7 @@ class User
   attribute_mapping :join_date, 'okta.employeeStartDate'
 
   validates :auth_token, uniqueness: true, presence: true
-  validates :coordinates, format: { with: /-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}/,
+  validates :coordinates, format: { with: /\A-?\d{1,2}\.\d{1,14}, ?-?\d{1,3}\.\d{1,14}\z/,
                                     message: "requires format like '49.446444, 11.330570'" }, allow_blank: true
 
   def self.find(ident)
@@ -70,5 +69,9 @@ class User
 
   def reset_auth_token
     self.auth_token = SecureRandom.hex unless auth_token
+  end
+
+  def picture(size: 50)
+    img&.thumb("#{size}x#{size}#")&.url(host: '')
   end
 end

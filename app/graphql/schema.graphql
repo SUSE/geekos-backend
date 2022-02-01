@@ -1,0 +1,57 @@
+type Location {
+  abbreviation: String
+  address: String
+  city: String
+  country: String
+  id: ID!
+  latitude: String
+  longitude: String
+}
+
+type Mutation {
+  """
+  Update a user
+  """
+  updateUser(birthday: String, coordinates: String, ident: String!, locationId: Int, notes: String, opensuseUsername: String, phone: String, room: String, title: String): User!
+}
+
+type OrgUnit {
+  id: ID!
+  name: String
+  type: String!
+}
+
+type Query {
+  user(ident: String!): User!
+  users: [User!]!
+}
+
+type Tag {
+  description: String
+  name: String!
+}
+
+type User {
+  admin: Boolean
+  birthday: String
+  coordinates: String
+  country: String
+  email: String!
+  employeenumber: String
+  fullname: String
+  githubUsernames: [String!]
+  joinDate: String
+  leadOfOrgUnit: OrgUnit
+  location: Location
+  notes: String
+  opensuseUsername: String
+  orgUnit: OrgUnit
+  phone: String
+  picture(size: Int!): String
+  room: String
+  tags: [Tag!]
+  title: String
+  trelloUsername: String
+  type: String!
+  username: String!
+}
