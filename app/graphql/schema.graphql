@@ -12,7 +12,7 @@ type Mutation {
   """
   Update a user
   """
-  updateUser(birthday: String, coordinates: String, ident: String!, locationId: Int, notes: String, opensuseUsername: String, phone: String, room: String, title: String): User!
+  updateUser(avatar: String, birthday: String, coordinates: String, ident: String!, locationId: Int, notes: String, opensuseUsername: String, phone: String, room: String, tags: String, title: String): User!
 }
 
 type OrgUnit {
