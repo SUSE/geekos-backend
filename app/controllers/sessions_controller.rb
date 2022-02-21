@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     session[:frontend_url] = params['frontend_url']
     client = OicClient.new(sessions_login_url)
     request_url = client.auth_uri(session[:nonce])
-    redirect_to(request_url)
+    redirect_to(request_url, allow_other_host: true)
   end
 
   def login

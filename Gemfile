@@ -9,10 +9,10 @@ end
 gem 'awesome_print'
 gem 'bootsnap', require: false
 gem 'puma'
-gem 'rails', '~> 6.1' # TODO: mongoid is not yet compatible with rails7
+gem 'rails', '~> 7.0'
 
 # storage
-gem 'mongoid', '~> 7.3.3'
+gem 'mongoid', github: 'mongodb/mongoid' # use git version for Rails 7 compat
 gem 'mongoid-audit_log'
 gem 'mongoid-tree', require: 'mongoid/tree'
 
