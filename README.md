@@ -33,6 +33,7 @@ Please see `.ruby_version` for the required Ruby, install bundler with
 `gem install bundler:2.1.4` and install dependencies by calling `bundle`.
 To start the server, run: `> bundle exec rails s -b 0.0.0.0`
 
+To export the graphql schema, run: `bundle exec rake graphql:export`
 
 ## Importing data
 

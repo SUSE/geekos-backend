@@ -26,6 +26,12 @@ FactoryBot.define do
       end
     end
 
+    trait :okta do
+      okta do
+        { employeeStartDate: FFaker.numerify('201#-##-##') }.stringify_keys
+      end
+    end
+
     trait :root do
       after(:create) do |instance|
         instance.update(ldap: instance.ldap.update(samaccountname: Crawler::OrgTree::ROOT_USERNAME))

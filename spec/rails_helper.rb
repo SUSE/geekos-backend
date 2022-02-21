@@ -6,7 +6,6 @@ require 'rspec/rails'
 require 'database_cleaner/mongoid'
 require 'json_matchers/rspec'
 require 'mongoid-rspec'
-require 'factory_bot_rails'
 require 'ffaker'
 require 'webmock/rspec'
 

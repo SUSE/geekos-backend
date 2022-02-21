@@ -1,8 +1,6 @@
-API backend for the SUSE Geeko Browser.
+<h2>API backend for Geekos</h2>
 
-<br/>
-
-<h4>API Spec:</h4>
+<h3>REST API</h3>
 
 <a href="<%= api_search_path(q: 'test') %>">/api/search?q=search_term</a> - Global search (users + teams)
 <br/><br/>
@@ -14,7 +12,7 @@ API backend for the SUSE Geeko Browser.
 <br/>
 <a href="<%= api_team_path(OrgUnit.last.try(:id) || '123') %>">/api/teams/&lt;teamid&gt;</a> - Single team
 <br/>
-<a href="<%= root_api_teams_path %>">/api/teams/root</a> - SUSE root team
+<a href="<%= root_api_teams_path %>">/api/teams/root</a> - Team tree, starting with root team
 <br/>
 <a href="<%= search_api_teams_path(q: 'scc') %>">/api/teams/search?q=search_term</a> - Search teams
 <br/><br/>
@@ -36,3 +34,52 @@ API backend for the SUSE Geeko Browser.
 <a href="<%= api_tag_path(id: Tag.last.try(:name) || 'test') %>">/api/tag/&lt;name&gt;</a> - Show tag
 <br/>
 <a href="<%= search_api_tags_path(q: Tag.last.try(:name) || 'test') %>">/api/tags/search?q=&lt;name&gt;</a> - Search tags
+<br/><br/>
+
+<a href="<%= api_meta_users_path %>">/api/meta/users</a> - List user stats, new users etc.
+<br/>
+<a href="<%= api_meta_changes_path %>">/api/meta/changes</a> - List changes (admin only)
+<br/>
+
+<h3>GraphQL API</h3>
+
+<style>
+pre {
+  background-color: #c0c0c0;
+  margin: 10px;
+  padding: 10px
+}
+</style>
+
+Graphql browser: <a href="/graphiql">/graphiql</a>
+
+<h4>GraphQL Schema</h4>
+
+<pre>
+<%= @graphql_schema %>
+</pre>
+
+<h4>Queries</h4>
+
+User details:
+<pre>
+curl 'http://localhost:3000/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{
+   "query": "{ user (ident: \"tschmidt\") { email title picture (size: 100) githubUsernames trelloUsername leadOfOrgUnit { name } } }"
+          }' | jq
+</pre>
+
+<h4>Mutations</h4>
+
+Update user:
+<pre>
+curl 'http://localhost:3000/graphql' \
+  -X POST \
+  -H 'content-type: application/json' \
+  -H 'Authorization: Token token=<your_auth_token>' \
+  --data '{
+    "query": "mutation { updateUser (ident: \"tschmidt\" title: \"Rocker\") { fullname email title } }"
+          }' | jq
+</pre>

@@ -7,10 +7,8 @@
     "short_description",
     "description",
     "parents",
-    "depth",
     "children",
     "members",
-    "depth_name",
     "lead"
   ],
   "properties": {
@@ -23,15 +21,6 @@
     "parents": {
       "type": "array",
       "items": { "$ref": "file:/parent_org_unit.json#" }
-    },
-    "depth": { "type": "integer" },
-    "depth_name": {
-      "type": "object",
-      "required": ["lead", "unit"],
-      "properties": {
-        "lead": { "type": "string" },
-        "unit": { "type": "string" }
-      }
     },
     "children": {
       "type": "array",

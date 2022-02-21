@@ -1,6 +1,6 @@
 class OrgUnitSerializer < ActiveModel::Serializer
   attributes :type, :id, :name, :short_description, :description, :parents, :img,
-             :depth, :depth_name, :children, :members, :lead
+             :children, :members, :lead
 
   has_many :members, serializer: UserSummarySerializer
 
