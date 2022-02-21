@@ -17,6 +17,8 @@ describe Crawler::Okta do
         OpenStruct.new({ status: 'ACTIVE', profile: OpenStruct.new({ email: 'not_there' }) })], 200]
     end
 
+    before { ENV['okta_token'] = 'test' }
+
     it 'updates existing users' do
       expect { okta_crawler.run }.to change { user.reload.updated_at }
     end
