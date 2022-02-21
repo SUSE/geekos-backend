@@ -36,6 +36,12 @@ jobs:
       # Add or replace test runners here
       - name: Run tests
         run: bin/rspec
+      - name: Codeclimate code coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageLocations: coverage:simplecov
 
   lint:
     runs-on: ubuntu-latest
@@ -53,21 +59,3 @@ jobs:
       #  run: bin/brakeman -q -w2
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
-        
-  coverage:
-    needs: [ test ]
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install Ruby and gems
-      uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
-      with:
-        bundler-cache: true
-    - uses: paambaati/codeclimate-action@v2.2.4
-      env:
-        CC_TEST_REPORTER_ID: 9a8966660ab0022a79781464ffb522e3730b67fff6c24bf097b9ace1a429c409
-      with:
-        coverageCommand: bin/rspec 
-        coverageLocations: coverage:simplecov
