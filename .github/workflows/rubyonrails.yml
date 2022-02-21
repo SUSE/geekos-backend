@@ -41,7 +41,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         with:
-          coverageLocations: coverage/.resultset.json:simplecov
+          coverageLocations: coverage/.last_run.json:simplecov
 
   lint:
     runs-on: ubuntu-latest
