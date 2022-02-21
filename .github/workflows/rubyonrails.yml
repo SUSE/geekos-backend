@@ -33,15 +33,6 @@ jobs:
       # Add or replace database setup steps here
       #- name: Set up database schema
       #  run: bin/rails db:schema:load
-      # Add or replace test runners here
-      - name: Run tests
-        run: bin/rspec
-      - name: Codeclimate code coverage
-        uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        with:
-          coverageLocations: coverage/.last_run.json:simplecov
 
   lint:
     runs-on: ubuntu-latest
