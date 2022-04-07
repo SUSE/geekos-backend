@@ -246,7 +246,7 @@ GEM
       validate_url
       webfinger (>= 1.0.1)
     optimist (3.0.1)
-    parallel (1.22.0)
+    parallel (1.22.1)
     parser (3.1.1.0)
       ast (~> 2.4.1)
     public_suffix (4.0.6)
@@ -335,7 +335,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.16.0)
       parser (>= 3.1.1.0)
-    rubocop-graphql (0.13.0)
+    rubocop-graphql (0.14.2)
       rubocop (>= 0.87, < 2)
     rubocop-performance (1.13.3)
       rubocop (>= 1.7.0, < 2.0)
