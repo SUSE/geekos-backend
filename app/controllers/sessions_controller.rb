@@ -17,6 +17,6 @@ class SessionsController < ApplicationController
     else
       logger.error("Failed login from #{userinfo.email}: User not found")
     end
-    redirect_to((session[:frontend_url] || '/') + "?auth_token=#{auth_token}")
+    redirect_to((session[:frontend_url] || '/') + "?auth_token=#{auth_token}", allow_other_host: true)
   end
 end
