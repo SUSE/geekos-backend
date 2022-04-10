@@ -1,8 +1,6 @@
 require 'simplecov'
 require 'codecov'
-# For some reason, when running in Github Actions it reports for 2 untested lines
-# which is not reproducible locally.
-SimpleCov.minimum_coverage 99
+SimpleCov.minimum_coverage 100
 SimpleCov.start 'rails' do
   add_filter 'lib/ldap.rb'
   add_filter 'lib/crawler/delve.rb'
