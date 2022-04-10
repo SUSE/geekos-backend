@@ -32,7 +32,7 @@ Geekos reads its configuration from environment variables, or from the file `con
 using [figaro](https://github.com/laserlemon/figaro).
 
 Please see `.ruby_version` for the required Ruby, install bundler with
-`gem install bundler:2.1.4` and install dependencies by calling `bundle`.
+`gem install bundler:2.3.7` and install dependencies by calling `bundle`.
 To start the server, run: `> bundle exec rails s -b 0.0.0.0`
 
 To export the graphql schema, run: `bundle exec rake graphql:export`
@@ -58,7 +58,7 @@ For example `act -j test`.
 The container image gets build with: <br>
 `docker build -t geekos-backend .`
 
-You can run the image with this command: <br> `docker run -p 3000:3000 -e geekos_mongodb_server=172.17.0.1 -e SECRET_KEY_BASE=5fadcd  --rm geekos-backend` <br>
+You can run the image with this command: <br> `docker run -p 3000:3000 -e geekos_mongodb_server=172.17.0.1 -e SECRET_KEY_BASE=5fadcd -e RAILS_LOG_TO_STDOUT=true --rm geekos-backend` <br>
 (172.17.0.1 is the Docker host IP, see config/application.yml.template for all available env vars)
 
-To open a shell inside of the container: <br> `docker run --privileged --rm -ti geekos-backend /bin/bash`
+To open a shell inside of the container: <br> `docker run --rm -ti geekos-backend /bin/bash`

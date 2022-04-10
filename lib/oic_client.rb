@@ -24,7 +24,7 @@ class OicClient
     client.authorization_uri(
       scope: %i[profile email],
       state: nonce,
-      nonce: nonce
+      nonce:
     )
   end
 
@@ -42,7 +42,7 @@ class OicClient
     # public_keys = config.jwks
     # id_token = OpenIDConnect::ResponseObject::IdToken.decode(access_token.id_token, public_keys)
     id_token = OpenIDConnect::ResponseObject::IdToken.new(JSON::JWT.decode(access_token.id_token, :skip_verification))
-    id_token.verify!({ client_id: @client_id, issuer: config.issuer, nonce: nonce })
+    id_token.verify!({ client_id: @client_id, issuer: config.issuer, nonce: })
 
     access_token.userinfo!
   end

@@ -82,6 +82,6 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     name = leader.title.gsub(/#{title_match}/i, '').strip if title_match
     name = "#{leader.fullname}'s team" if name.blank?
     log.info "OrgTree -> Setting team name '#{name}'"
-    Mongoid::AuditLog.record { org.update!(name: name) }
+    Mongoid::AuditLog.record { org.update!(name:) }
   end
 end

@@ -40,7 +40,7 @@ class Crawler::Fuze < Crawler::BaseCrawler
         phone.gsub!('+49 911 880', '+49 911 880 ')
         phone.gsub!(/^\+1 ([0-9]{3})/, '+1 \\1 ')
         log.info("FUZE -> Setting '#{mail2uid[mail.downcase]}' phone to: #{phone}")
-        local_user.update!(phone: phone)
+        local_user.update!(phone:)
       end
       break if json[:data][:items].length < 100
 
