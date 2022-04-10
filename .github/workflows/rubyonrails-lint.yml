@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 # This workflow will download a prebuilt Ruby version, install dependencies, and  run linters
-name: Rails - Install dependencies and run linters
+name: Rubocop lint
 
 on:
   push:
@@ -11,22 +11,20 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  run-lint:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Setup Ruby and install gems
-        uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
         with:
+          ruby-version: 3.0.3
           bundler-cache: true
-      # Add or Replace any other security checks here
-      - name: Run security checks
-        run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
-      # Add or Replace any other Linters here
-      - name: Run linters
-        run: |
-          bin/rubocop --parallel
+      # Add or replace any other lints here
+      #- name: Security audit dependencies
+      #  run: bin/bundler-audit --update
+      #- name: Security audit application code
+      #  run: bin/brakeman -q -w2
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
