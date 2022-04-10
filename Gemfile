@@ -12,7 +12,7 @@ gem 'puma'
 gem 'rails', '~> 7.0'
 
 # storage
-gem 'mongoid', github: 'mongodb/mongoid' # use git version for Rails 7 compat
+gem 'mongoid'
 gem 'mongoid-audit_log'
 gem 'mongoid-tree', require: 'mongoid/tree'
 
