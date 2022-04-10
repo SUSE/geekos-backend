@@ -41,7 +41,7 @@ describe Crawler::Ldap do
       gone_user = create(:user)
 
       ldap_crawler.run
-      expect(User.find_by(id: gone_user.id)).to eq nil
+      expect(User.find_by(id: gone_user.id)).to be_nil
     end
   end
 end

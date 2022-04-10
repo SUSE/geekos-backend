@@ -44,6 +44,13 @@ To export the graphql schema, run: `bundle exec rake graphql:export`
 * After initial import, create indexes: `> bundle exec rake db:mongoid:create_indexes`
 
 
+## Testing
+
+To run the code linting and test suite, run: `bunde exec rubocop` and `bundle exec rspec`.
+The repository is also covered with automatic Github Actions jobs. You can
+run those locally with the tool [act](https://github.com/nektos/act).
+For example `act -j test`.
+
 ## Deployment
 
 ### Docker

@@ -1,3 +1,18 @@
+require 'simplecov'
+# For some reason, when running in Github Actions it reports for 2 untested lines
+# which is not reproducible locally.
+SimpleCov.minimum_coverage 99
+SimpleCov.start 'rails' do
+  add_filter 'lib/ldap.rb'
+  add_filter 'lib/crawler/delve.rb'
+  add_filter 'lib/crawler/fuze.rb'
+  add_filter 'lib/oic_client.rb'
+  add_filter 'app/controllers/api/locations_controller.rb'
+  add_filter 'app/controllers/api/rooms_controller.rb'
+  # has generated environment specific code
+  add_filter 'app/controllers/graphql_controller.rb'
+end
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
