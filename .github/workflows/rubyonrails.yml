@@ -38,3 +38,5 @@ jobs:
       # No database setup needed for mongo
       - name: Build and test with rspec
         run: bundle exec rspec
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel

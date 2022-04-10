@@ -426,7 +426,7 @@ DEPENDENCIES
   json_matchers
   jsonlint
   listen
-  mongoid (= 7.3.4)
+  mongoid
   mongoid-audit_log
   mongoid-rspec!
   mongoid-tree
