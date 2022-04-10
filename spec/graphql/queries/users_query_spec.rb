@@ -17,7 +17,7 @@ describe 'users query', type: 'request' do
 
     it 'returns users' do
       create_list(:user, 3, :ldap, :okta)
-      post(graphql_path, params: { query: query, variables: {}, headers: {} })
+      post(graphql_path, params: { query:, variables: {}, headers: {} })
       expect(json_response['data']['users'].size).to eq 3
     end
   end
@@ -35,7 +35,7 @@ describe 'users query', type: 'request' do
 
     it 'returns error' do
       create_list(:user, 3, :ldap, :okta)
-      post(graphql_path, params: { query: query, variables: {}, headers: {} })
+      post(graphql_path, params: { query:, variables: {}, headers: {} })
       expect(json_response.errors.first.message).to eq "Field 'attr' doesn't exist on type 'User'"
     end
   end

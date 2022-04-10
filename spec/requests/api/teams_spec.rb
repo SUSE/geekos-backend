@@ -40,7 +40,7 @@ describe 'Teams endpoint' do
       put(
         api_team_path(team),
         params: new_team_data,
-        headers: headers
+        headers:
       )
       json_response
     end

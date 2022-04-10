@@ -4,7 +4,7 @@ describe '/sessions', type: 'request' do
   let(:frontend_url) { 'http://geekos.scc.suse.de' }
 
   describe '#init' do
-    subject(:oic_init_request) { get sessions_init_url, params: { frontend_url: frontend_url } }
+    subject(:oic_init_request) { get sessions_init_url, params: { frontend_url: } }
 
     context 'with frontend_url' do
       it 'redirects to the frontend with auth token parameter' do

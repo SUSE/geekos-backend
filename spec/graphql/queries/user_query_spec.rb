@@ -17,7 +17,7 @@ describe 'user query', type: 'request' do
 
   it 'returns user' do
     user = create(:user, :ldap, :okta, tags: [create(:tag)])
-    post(graphql_path, params: { query: query, variables: { ident: user.username } }, headers: {})
+    post(graphql_path, params: { query:, variables: { ident: user.username } }, headers: {})
     expect(json_response['data'].size).to eq 1
     expect(json_response['data']['user']).to include(
       email: user.email,

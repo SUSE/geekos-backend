@@ -78,7 +78,7 @@ describe User, type: 'request' do
         patch(
           api_user_path(user.employeenumber),
           params: { tags: %w[foo bar baz] },
-          headers: headers
+          headers:
         )
         json_response
       end
@@ -100,7 +100,7 @@ describe User, type: 'request' do
         patch(
           api_user_path(user.employeenumber),
           params: {},
-          headers: headers
+          headers:
         )
         json_response
       end
@@ -125,7 +125,7 @@ describe User, type: 'request' do
 
     context 'valid payload' do
       subject(:update_user_request) do
-        patch(api_user_path(user.employeenumber), params: { phone: '6296' }, headers: headers)
+        patch(api_user_path(user.employeenumber), params: { phone: '6296' }, headers:)
         response
       end
 
@@ -140,7 +140,7 @@ describe User, type: 'request' do
 
       context 'avatar upload' do
         subject(:update_user_request) do
-          patch(api_user_path(user.employeenumber), params: { avatar: avatar_file }, headers: headers)
+          patch(api_user_path(user.employeenumber), params: { avatar: avatar_file }, headers:)
           response
         end
 
@@ -154,7 +154,7 @@ describe User, type: 'request' do
 
     context 'invalid payload' do
       subject(:update_user_request) do
-        patch(api_user_path(user.employeenumber), params: { coordinates: 123 }, headers: headers)
+        patch(api_user_path(user.employeenumber), params: { coordinates: 123 }, headers:)
         response
       end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe OrgUnit do
   describe '#lead' do
-    subject(:org_unit) { described_class.new(lead: lead) }
+    subject(:org_unit) { described_class.new(lead:) }
 
     let(:lead) { create(:user) }
 

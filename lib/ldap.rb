@@ -56,7 +56,7 @@ class Ldap
     def all_users
       result = Rails.cache.fetch('all_ldap_users', expires_in: 1.hour) do
         filter = Net::LDAP::Filter.construct('SAMAccountName=*')
-        rehash(Ldap.connection.ldap.search(filter: filter, return_result: true, attributes: configuration.desired_attr))
+        rehash(Ldap.connection.ldap.search(filter:, return_result: true, attributes: configuration.desired_attr))
       end
       result.values
     end
@@ -65,7 +65,7 @@ class Ldap
       result = Rails.cache.fetch('all_suse_ldap_users', expires_in: 1.hour) do
         # EMPLOYEESTATUS values: ["Terminated", "Active", "", "On Leave", "Pending", "Retired"]
         filter = Net::LDAP::Filter.construct('(| (EMPLOYEESTATUS=Active) (EMPLOYEESTATUS=On Leave))')
-        rehash(Ldap.connection.ldap.search(filter: filter, return_result: true, attributes: configuration.desired_attr))
+        rehash(Ldap.connection.ldap.search(filter:, return_result: true, attributes: configuration.desired_attr))
       end
       result.values
     end
@@ -88,19 +88,19 @@ class Ldap
         Net::LDAP::Filter.eq(attr, search_param)
       end
       filter = Net::LDAP::Filter.construct("(|#{all_filters.join})")
-      result = Ldap.connection.ldap.search(filter: filter, attributes: configuration.desired_attr, return_result: true)
+      result = Ldap.connection.ldap.search(filter:, attributes: configuration.desired_attr, return_result: true)
       rehash(result)
     end
 
     def search_by_uid(uid)
       filter = Net::LDAP::Filter.eq('SAMAccountName', uid)
-      result = Ldap.connection.ldap.search(filter: filter, return_result: true)
+      result = Ldap.connection.ldap.search(filter:, return_result: true)
       rehash(result)
     end
 
     def search_by_cn(uid)
       filter = Net::LDAP::Filter.eq('cn', uid)
-      result = Ldap.connection.ldap.search(filter: filter, return_result: true)
+      result = Ldap.connection.ldap.search(filter:, return_result: true)
       rehash(result)
     end
 
