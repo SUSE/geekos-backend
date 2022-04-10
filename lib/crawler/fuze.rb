@@ -21,9 +21,9 @@ class Crawler::Fuze < Crawler::BaseCrawler
     url = 'https://api.fuze.com/contactive/v1.0/users/me/contacts'
     offset = -1
     loop do
-      params = { sortField: 'revision', sortOrder: 'asc', limit: '100',
-                 offset: [offset, 0].max }
-      json = Oj.load(RestClient.get(url, { params: params, Authorization: API_SECRET }).body, symbol_keys: true)
+      parameters = { sortField: 'revision', sortOrder: 'asc', limit: '100',
+                     offset: [offset, 0].max }
+      json = Oj.load(RestClient.get(url, { params: parameters, Authorization: API_SECRET }).body, symbol_keys: true)
       contact_list = json[:data][:items].map { |i| i.slice(:email, :phone) }
       contact_list.select { |c| c[:email].present? }.each do |contact|
         mail = contact[:email][0][:email]
