@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.7.5
+  TargetRubyVersion: 3.0
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
@@ -78,4 +78,7 @@ Style/StringLiterals:
   Enabled: false
 
 Rails/FilePath:
+  Enabled: false
+
+Rails/I18nLocaleTexts:
   Enabled: false
