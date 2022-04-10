@@ -3,12 +3,12 @@ class SearchSerializer < ActiveModel::Serializer
 
   def results
     object.results.map do |result|
-      case result.class
-      when User
+      case result.class.name
+      when 'User'
         UserSummarySerializer.new(result)
-      when OrgUnit
+      when 'OrgUnit'
         OrgUnitSerializer.new(result)
-      when Tag
+      when 'Tag'
         TagSerializer.new(result)
       end
     end
