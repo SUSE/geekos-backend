@@ -40,3 +40,11 @@ jobs:
         run: bundle exec rspec
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/
+          files: codecov-result.json
+          verbose: false

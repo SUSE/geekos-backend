@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'codecov'
 # For some reason, when running in Github Actions it reports for 2 untested lines
 # which is not reproducible locally.
 SimpleCov.minimum_coverage 99
@@ -11,11 +12,11 @@ SimpleCov.start 'rails' do
   add_filter 'app/controllers/api/rooms_controller.rb'
   # has generated environment specific code
   add_filter 'app/controllers/graphql_controller.rb'
+  formatter(ENV['CI'] ? SimpleCov::Formatter::Codecov : SimpleCov::Formatter::HTMLFormatter)
 end
 
-ENV['RAILS_ENV'] ||= 'test'
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
-abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 require 'database_cleaner/mongoid'

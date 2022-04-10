@@ -1,8 +1,8 @@
-<a href="https://codeclimate.com/github/SUSE/geekos-backend/maintainability"><img src="https://api.codeclimate.com/v1/badges/ff0dff43b4acf5d77303/maintainability" /></a>
+[![Maintainability](https://api.codeclimate.com/v1/badges/ff0dff43b4acf5d77303/maintainability)](https://codeclimate.com/github/SUSE/geekos-backend/maintainability)
 [![CodeQL](https://github.com/SUSE/geekos-backend/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/SUSE/geekos-backend/actions/workflows/codeql-analysis.yml)
 [![Brakeman Scan](https://github.com/SUSE/geekos-backend/actions/workflows/brakeman-analysis.yml/badge.svg)](https://github.com/SUSE/geekos-backend/actions/workflows/brakeman-analysis.yml)
 [![Rspec](https://github.com/SUSE/geekos-backend/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/SUSE/geekos-backend/actions/workflows/rubyonrails.yml)
-
+[![Coverage](https://codecov.io/gh/SUSE/geekos-backend/branch/main/graph/badge.svg?token=65YS1lM0mV)](https://codecov.io/gh/SUSE/geekos-backend)
 
 # Geekos
 
