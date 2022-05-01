@@ -3,7 +3,7 @@ class Crawler::Fuze < Crawler::BaseCrawler
   # It should look like "Bearer ..."
   # You can obtain it by logging into https://web.fuze.com (with chromium)
   # and looking at the XHR request headers using you browser's devtools
-  API_SECRET = ENV['geekos_fuze_secret']
+  API_SECRET = ENV.fetch('geekos_fuze_secret', nil)
 
   def run
     raise 'please set geekos_fuze_secret to run the fuze crawler' unless API_SECRET

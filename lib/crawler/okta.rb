@@ -52,6 +52,6 @@ class Crawler::Okta < Crawler::BaseCrawler
   end
 
   def client
-    @client ||= Oktakit::Client.new(token: ENV['okta_token'], organization: 'suse')
+    @client ||= Oktakit::Client.new(token: ENV.fetch('okta_token', nil), organization: 'suse')
   end
 end

@@ -15,12 +15,12 @@ class Ldap
     attr_accessor :host, :port, :method, :base, :login, :password, :desired_attr
 
     def initialize
-      @host     = ENV['geekos_ldap_host']
-      @port     = ENV['geekos_ldap_port']
-      @method   = (ENV['geekos_ldap_port'] == '389' ? nil : :simple_tls)
-      @base     = ENV['geekos_ldap_base']
-      @login    = ENV['geekos_ldap_login']
-      @password = ENV['geekos_ldap_password']
+      @host     = ENV.fetch('geekos_ldap_host', nil)
+      @port     = ENV.fetch('geekos_ldap_port', nil)
+      @method   = (ENV.fetch('geekos_ldap_port', nil) == '389' ? nil : :simple_tls)
+      @base     = ENV.fetch('geekos_ldap_base', nil)
+      @login    = ENV.fetch('geekos_ldap_login', nil)
+      @password = ENV.fetch('geekos_ldap_password', nil)
 
       @desired_attr = %w[
         title
