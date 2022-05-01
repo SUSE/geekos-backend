@@ -29,7 +29,7 @@ describe '/sessions', type: 'request' do
 
     context 'with a valid oic response' do
       let(:oic_response) { '123' }
-      let(:userinfo) { instance_double('OpenIDConnect::ResponseObject::UserInfo') }
+      let(:userinfo) { instance_double(OpenIDConnect::ResponseObject::UserInfo) }
       let(:user) { create(:user, :ldap) }
 
       it 'redirects to the frontend with auth token parameter' do
