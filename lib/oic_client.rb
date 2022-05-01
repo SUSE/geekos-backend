@@ -12,9 +12,9 @@
 
 class OicClient
   def initialize(redirect_uri)
-    @provider_uri = ENV['oic_provider_url']
-    @client_id = ENV['oic_client_id']
-    @secret = ENV['oic_secret']
+    @provider_uri = ENV.fetch('oic_provider_url', nil)
+    @client_id = ENV.fetch('oic_client_id', nil)
+    @secret = ENV.fetch('oic_secret', nil)
     @redirect_uri = redirect_uri
   end
 
