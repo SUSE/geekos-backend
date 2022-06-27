@@ -24,7 +24,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :tags, only: %i[show index] do
+    resources :tags, only: %i[show index update] do
       get :search, on: :collection
     end
 

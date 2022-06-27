@@ -11,4 +11,11 @@ class Api::TagsController < Api::BaseController
     tags = Search.new(params[:q], Tag)
     render json: tags
   end
+
+  def update
+    tag = Tag.find_by(name: params[:id])
+    authorize! :update, tag
+    tag.update!(description: params[:description])
+    render json: tag
+  end
 end

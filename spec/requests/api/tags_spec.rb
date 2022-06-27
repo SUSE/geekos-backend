@@ -23,6 +23,25 @@ describe '/api/tags' do
     end
   end
 
+  describe 'update' do
+    subject do
+      put(
+        api_tag_path(id: tag.name),
+        params: { description: 'foo' },
+        headers:
+      )
+      json_response
+    end
+
+    let(:tag) { create(:tag) }
+    let(:user) { create(:user) }
+    let(:headers) do
+      { 'Authorization' => "Token token=#{user.auth_token}" }
+    end
+
+    its(:description) { is_expected.to eq 'foo' }
+  end
+
   describe 'search' do
     subject(:search_tag) { get(search_api_tags_path(q: Tag.last.name)) }
 
