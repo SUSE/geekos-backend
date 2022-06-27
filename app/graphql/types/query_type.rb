@@ -4,7 +4,7 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
-    field :user, Types::UserType, null: false do
+    field :user, Types::UserType, null: true do
       argument :ident, String, required: true
     end
     field :users, [Types::UserType], null: false
