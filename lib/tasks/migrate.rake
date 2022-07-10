@@ -42,8 +42,8 @@ namespace :migrate do
         user.lead_of_org_unit&.update!(name: luser.team_name, short_description: luser.team_short_description,
                                        description: luser.team_description)
       else
-        Rails.logger.info "User not found: #{LdapUser.find_by(workforceid: luser.workforceid).try(:fullname)}" \
-                          " (#{luser.workforceid})"
+        Rails.logger.info "User not found: #{LdapUser.find_by(workforceid: luser.workforceid).try(:fullname)} " \
+                          "(#{luser.workforceid})"
       end
     end
   end

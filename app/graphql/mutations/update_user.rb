@@ -40,7 +40,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   def mass_assign_attributes(attributes)
     # drop nil values, set empty values to nil for value reset
     exclude = %i[tags avatar]
-    attributes.reject { |k, _v| exclude.include? k }
+    attributes.except(*exclude)
               .compact.transform_values(&:presence)
   end
 
