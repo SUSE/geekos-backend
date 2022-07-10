@@ -1,5 +1,6 @@
 # Download user pictures from Delve: https://eur.delve.office.com/
 # Image path is for example: /mt/v3/people/profileimage?userId=tschmidt%40suse.com&size=L
+#
 # Update a single picture with the one from Delve:
 # `Crawler::Delve::RemotePicture.new(User.find('tschmidt')).download!`
 class Crawler::Delve < Crawler::BaseCrawler
@@ -17,7 +18,14 @@ class Crawler::Delve < Crawler::BaseCrawler
 
     def initialize(user)
       @user = user
-      raise "ENV['geekos_delve_auth_cookie'] not set!" if ENV['geekos_delve_auth_cookie'].blank?
+      raise "ENV['geekos_delve_auth_c1'] not set!" if ENV['geekos_delve_auth_c1'].blank?
+      raise "ENV['geekos_delve_auth_c2'] not set!" if ENV['geekos_delve_auth_c2'].blank?
+    end
+
+    def cookies
+      { "X-Delve-AuthC1" => ENV.fetch('geekos_delve_auth_c1', nil),
+        "X-Delve-AuthC2" => ENV.fetch('geekos_delve_auth_c2', nil),
+        "X-Delve-Auth" => "chunks-2" }
     end
 
     def download!
@@ -27,16 +35,13 @@ class Crawler::Delve < Crawler::BaseCrawler
       elsif same_image?
         Crawler.logger.debug "Same image stored locally as in Delve ...skip"
       else
-        Crawler.logger.info "Storing image for #{user.email}"
+        Crawler.logger.info "** Storing new image for #{user.email}"
         handle_filename_and_save
       end
     end
 
-    # needed cookies: X-Delve-AuthEurS
     def remote_data
-      @remote_data ||= RestClient.get(delve_image_url,
-                                      { cookies: { "X-Delve-AuthEurS" => ENV.fetch('geekos_delve_auth_cookie',
-                                                                                   nil) } }).body
+      @remote_data ||= RestClient.get(delve_image_url, { cookies: }).body
     rescue RestClient::NotFound
       nil
     rescue StandardError => e
