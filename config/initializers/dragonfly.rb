@@ -9,8 +9,8 @@ Dragonfly.app.configure do
   url_format '/media/:job/:name'
 
   datastore :file,
-            root_path: Rails.root.join('public', 'system', 'dragonfly'),
-            server_root: Rails.root.join('public')
+            root_path: Rails.public_path.join('system', 'dragonfly'),
+            server_root: Rails.public_path
 
   fetch_file_whitelist [
     /public/
