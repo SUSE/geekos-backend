@@ -228,7 +228,7 @@ GEM
     nokogiri (1.13.7-x86_64-linux)
       racc (~> 1.4)
     oauth (0.5.10)
-    oj (3.13.20)
+    oj (3.13.21)
     oktakit (0.3.3)
       faraday (>= 0.17.3, < 2)
       sawyer (>= 0.8.1, < 0.10)
