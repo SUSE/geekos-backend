@@ -7,6 +7,7 @@ describe Onboarding do
     it 'uses the list ids to query Trello' do
       allow(Trello::List).to receive(:find).and_return instance_double(Trello::List, name: 'test list', cards: [])
       described_class.chapters
+      expect(Trello::List).to have_received(:find)
     end
   end
 end

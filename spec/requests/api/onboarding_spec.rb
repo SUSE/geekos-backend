@@ -6,7 +6,7 @@ describe '/api/onboarding' do
 
     it 'loads onboarding chapters' do
       allow(Onboarding).to receive(:chapters)
-      onboarding
+      expect(onboarding).to eq 200
     end
   end
 end
