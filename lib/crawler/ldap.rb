@@ -70,7 +70,7 @@ class Crawler::Ldap < Crawler::BaseCrawler
   end
 
   def users_to_cleanup
-    ldap_ids = suse_ldap_users.map { |x| x['employeenumber'] }
+    ldap_ids = suse_ldap_users.pluck('employeenumber')
     User.not.in('ldap.employeenumber': ldap_ids).to_a
   end
 end
