@@ -15,7 +15,7 @@ Features:
 * Sync + combine user data from different systems into a flexible schema (MongoDB)
 * Overwriting of defined fields
 * Extensible crawlers to collect user data from different backend systems
-* JSON APIs
+* REST & GraphQL JSON APIs
 * Storing user images
 * Supporting location/room/coordinates per user
 
