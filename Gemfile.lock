@@ -108,8 +108,8 @@ GEM
     database_cleaner-mongoid (2.0.1)
       database_cleaner-core (~> 2.0.0)
       mongoid
+    date (3.3.3)
     diff-lcs (1.5.0)
-    digest (3.1.0)
     docile (1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -117,7 +117,7 @@ GEM
       addressable (~> 2.3)
       multi_json (~> 1.0)
       rack (>= 1.3)
-    erubi (1.11.0)
+    erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -180,18 +180,21 @@ GEM
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.19.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.1)
+    mail (2.8.0.1)
       mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
-    minitest (5.16.3)
+    minitest (5.17.0)
     mongo (2.18.1)
       bson (>= 4.14.1, < 5.0.0)
     mongoid (7.5.2)
@@ -208,22 +211,19 @@ GEM
     msgpack (1.6.0)
     multi_json (1.15.0)
     multipart-post (2.2.3)
-    net-imap (0.2.3)
-      digest
+    net-imap (0.3.4)
+      date
       net-protocol
-      strscan
     net-ldap (0.17.1)
-    net-pop (0.1.1)
-      digest
+    net-pop (0.1.2)
       net-protocol
+    net-protocol (0.2.1)
       timeout
-    net-protocol (0.1.3)
-      timeout
-    net-smtp (0.3.2)
+    net-smtp (0.3.3)
       net-protocol
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.9-x86_64-linux)
+    nokogiri (1.14.0-x86_64-linux)
       racc (~> 1.4)
     oauth (0.5.10)
     oj (3.13.23)
@@ -248,8 +248,8 @@ GEM
     public_suffix (5.0.0)
     puma (6.0.0)
       nio4r (~> 2.0)
-    racc (1.6.0)
-    rack (2.2.4)
+    racc (1.6.2)
+    rack (2.2.5)
     rack-cache (1.13.0)
       rack (>= 0.4)
     rack-cors (1.1.1)
@@ -279,8 +279,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.3)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.4.4)
+      loofah (~> 2.19, >= 2.19.1)
     railties (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -375,13 +375,12 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    strscan (3.0.4)
     swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     thor (1.2.1)
-    timeout (0.3.0)
+    timeout (0.3.1)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -404,7 +403,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   x86_64-linux
