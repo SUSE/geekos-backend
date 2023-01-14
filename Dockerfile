@@ -1,4 +1,4 @@
-FROM ruby:3.1.3
+FROM ruby:3.2
 ENV RAILS_ENV production
 ENV BUNDLE_WITHOUT development
 
