@@ -12,9 +12,10 @@ module Types
       argument :order, String, required: false
     end
 
+    # 'order' cannot use mapped attributes, needs full name, like 'okta.employeeStartDate'
     def users(order: nil, limit: nil)
       users = User.all
-      users = users.sort({order: -1}) if order
+      users = users.sort({order => -1}) if order
       users = users.limit(limit) if limit
       users
     end
