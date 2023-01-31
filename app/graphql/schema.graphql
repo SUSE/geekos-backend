@@ -24,7 +24,7 @@ type OrgUnit {
 type Query {
   newcomers: [User!]
   user(ident: String!): User
-  users: [User!]!
+  users(limit: Int, order: String): [User!]!
 }
 
 type Tag {

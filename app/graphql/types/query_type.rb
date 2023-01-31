@@ -7,15 +7,16 @@ module Types
     field :user, Types::UserType, null: true do
       argument :ident, String, required: true
     end
-    field :users, [Types::UserType], null: false
-    field :newcomers, [Types::UserType], null: true
-
-    def users
-      User.all
+    field :users, [Types::UserType], null: false do
+      argument :limit, Integer, required: false
+      argument :order, String, required: false
     end
 
-    def newcomers
-      User.desc('okta.employeeStartDate').limit(25)
+    def users(order: nil, limit: nil)
+      users = User.all
+      users = users.sort({order: -1}) if order
+      users = users.limit(limit) if limit
+      users
     end
 
     def user(ident:)
