@@ -8,9 +8,14 @@ module Types
       argument :ident, String, required: true
     end
     field :users, [Types::UserType], null: false
+    field :newcomers, [Types::UserType], null: true
 
     def users
       User.all
+    end
+
+    def newcomers
+      User.desc('okta.employeeStartDate').limit(25)
     end
 
     def user(ident:)

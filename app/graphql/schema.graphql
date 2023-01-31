@@ -22,6 +22,7 @@ type OrgUnit {
 }
 
 type Query {
+  newcomers: [User!]
   user(ident: String!): User
   users: [User!]!
 }
