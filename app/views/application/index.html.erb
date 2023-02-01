@@ -51,7 +51,9 @@ pre {
 }
 </style>
 
+<% if Rails.env.development? %>
 Graphql browser: <a href="/graphiql">/graphiql</a>
+<% end %>
 
 <h4>GraphQL Schema</h4>
 
