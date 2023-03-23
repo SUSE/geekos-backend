@@ -30,7 +30,7 @@ describe User, type: 'request' do
 
       it 'returns arrays of errors' do
         get_one_user_with_wrong_id
-        expect(json_response[:errors]).to match_array ['user not found']
+        expect(json_response[:errors]).to contain_exactly('user not found')
       end
     end
   end

@@ -1,5 +1,5 @@
 class Crawler::OrgTree < Crawler::BaseCrawler
-  ROOT_USERNAME = 'mdidonato'.freeze
+  ROOT_USERNAME = ENV.fetch('geekos_root_username', nil)
 
   def run
     super
