@@ -10,7 +10,7 @@ describe '/api/meta' do
 
     it 'returns the latest joined users' do
       users
-      newcomers = JSON.parse(response.body)['newcomers']
+      newcomers = response.parsed_body['newcomers']
       expect(newcomers.first['join_date']).to eq User.desc('okta.employeeStartDate').first.join_date
       expect(newcomers.first['join_date']).to match(/201\d-/)
     end
@@ -25,7 +25,7 @@ describe '/api/meta' do
 
     it 'returns latest changes' do
       changes
-      changes = JSON.parse(response.body)['changes']
+      changes = response.parsed_body['changes']
       expect(changes.first['changes']['notes'].last).to eq 'I am user'
     end
   end
