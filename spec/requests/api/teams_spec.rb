@@ -3,8 +3,6 @@ require 'rails_helper'
 describe 'Teams endpoint' do
   before do
     orgs = create_list(:org_unit, 3)
-    leader = orgs.first.lead
-    leader.update(ldap: leader.ldap.update(samaccountname: Crawler::OrgTree::ROOT_USERNAME))
     OrgUnit.create_indexes
   end
 
@@ -13,6 +11,8 @@ describe 'Teams endpoint' do
       get(root_api_teams_path)
       response
     end
+
+    before { allow_any_instance_of(Crawler::OrgTree).to receive(:root).and_return(OrgUnit.first.lead) }
 
     it { is_expected.to match_response_schema('org_unit_summary') }
   end
