@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Teams endpoint' do
   before do
-    orgs = create_list(:org_unit, 3)
+    create_list(:org_unit, 3)
     OrgUnit.create_indexes
   end
 
