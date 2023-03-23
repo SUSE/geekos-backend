@@ -48,7 +48,9 @@ class Crawler::OrgTree < Crawler::BaseCrawler
         if user.subordinates.any?
           org = (user.lead_of_org_unit ||= OrgUnit.new(lead: user))
           # log.info "OrgTree -> Working on orgunit for '#{org.name}'"
-          unless tree_node.is_root?
+          if tree_node.is_root?
+            org.parent_id = nil
+          else
             parent = user.manager.lead_of_org_unit
             org.parent_id = parent.id
           end

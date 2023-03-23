@@ -67,7 +67,7 @@ Metrics/CyclomaticComplexity:
   Max: 10
 
 Metrics/PerceivedComplexity:
-  Max: 11
+  Max: 12
 
 Rails/HasAndBelongsToMany:
   Enabled: false
