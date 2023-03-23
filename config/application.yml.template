@@ -4,6 +4,7 @@
 "geekos_ldap_login": ""
 "geekos_ldap_password": ""
 "geekos_mongodb_server": "localhost"
+"geekos_root_username": ""
 "geekos_trello_key": ""
 "geekos_trello_token": ""
 "geekos_trello_lists": ""
