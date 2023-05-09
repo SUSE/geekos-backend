@@ -214,7 +214,7 @@ GEM
     net-imap (0.3.4)
       date
       net-protocol
-    net-ldap (0.17.1)
+    net-ldap (0.18.0)
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.1)
@@ -223,7 +223,7 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.14.2-x86_64-linux)
+    nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
     oauth (0.5.10)
     oj (3.14.2)
@@ -339,7 +339,7 @@ GEM
     rubocop-performance (1.16.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    rubocop-rails (2.18.0)
+    rubocop-rails (2.19.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
@@ -348,8 +348,8 @@ GEM
     rubocop-rspec (2.19.0)
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
-    rubocop-thread_safety (0.4.4)
-      rubocop (>= 0.53.0)
+    rubocop-thread_safety (0.5.1)
+      rubocop (>= 0.90.0)
     ruby-progressbar (1.13.0)
     ruby-trello (3.2.0)
       activemodel (>= 3.2.0)
