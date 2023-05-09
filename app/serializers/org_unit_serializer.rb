@@ -1,5 +1,5 @@
 class OrgUnitSerializer < ActiveModel::Serializer
-  attributes :type, :id, :name, :short_description, :description, :parents, :parent, :img,
+  attributes :type, :id, :name, :short_description, :description, :parents, :img,
              :children, :members, :lead
 
   has_many :members, serializer: UserSummarySerializer
@@ -12,13 +12,9 @@ class OrgUnitSerializer < ActiveModel::Serializer
     object.img&.thumb('160x160#')&.url(host: '')
   end
 
-  # compatibility method, actually there is just one parent
+  # all parent org units up to the top
   def parents
-    [parent].compact
-  end
-
-  def parent
-    ParentOrgUnitSerializer.new(object.parent) if object.parent
+    object.parent_ids.filter_map { |id| OrgUnit.find(id) }.map { |o| ParentOrgUnitSerializer.new(o) }
   end
 
   def id
