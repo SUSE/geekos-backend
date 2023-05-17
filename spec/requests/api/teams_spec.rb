@@ -93,7 +93,7 @@ describe 'Teams endpoint' do
     describe 'with a wrong id' do
       it 'returns 404 for non-existent teams' do
         get(api_team_path('foobarbaz'))
-        expect(response.code).to eq '404'
+        expect(response).to have_http_status :not_found
       end
     end
   end
