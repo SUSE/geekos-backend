@@ -22,7 +22,7 @@ describe 'user mutation', type: 'request' do
 
   context 'with authentication' do
     it 'updates user attributes' do
-      user = create(:user, :ldap, :okta, tags: [create(:tag)])
+      user = create(:user, :ldap, :okta, tags: create_list(:tag, 1))
       post(graphql_path, params: { query:,
                                    variables: { ident: user.username, title: 'mc', notes: "it's me" } },
                          headers: { Authorization: "Token token=#{user.auth_token}" })
@@ -30,7 +30,7 @@ describe 'user mutation', type: 'request' do
     end
 
     it 'updates user avatar' do
-      user = create(:user, :ldap, :okta, tags: [create(:tag)])
+      user = create(:user, :ldap, :okta, tags: create_list(:tag, 1))
       # base64 encoded pixel
       b64_img = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
       post(graphql_path, params: { query:,
@@ -42,7 +42,7 @@ describe 'user mutation', type: 'request' do
 
   context 'without authentication' do
     it 'requests authentication' do
-      user = create(:user, :ldap, :okta, tags: [create(:tag)])
+      user = create(:user, :ldap, :okta, tags: create_list(:tag, 1))
       post(graphql_path, params: { query:, variables: { ident: user.username } }, headers: {})
       expect(json_response.errors.first.first.last).to eq 'Please authenticate with token'
     end
@@ -50,8 +50,8 @@ describe 'user mutation', type: 'request' do
 
   context 'when authenticated as another user' do
     it 'requests authentication' do
-      user = create(:user, :ldap, :okta, tags: [create(:tag)])
-      user2 = create(:user, :ldap, :okta, tags: [create(:tag)])
+      user = create(:user, :ldap, :okta, tags: create_list(:tag, 1))
+      user2 = create(:user, :ldap, :okta, tags: create_list(:tag, 1))
       post(graphql_path, params: { query:, variables: { ident: user.username } },
                          headers: { Authorization: "Token token=#{user2.auth_token}" })
       expect(json_response.errors.first.first.last).to eq 'You can only update your own user.'
