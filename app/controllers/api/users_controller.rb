@@ -61,6 +61,6 @@ class Api::UsersController < Api::BaseController
   end
 
   def tags_params
-    params['tags'].to_s.split(',').map(&:strip).map(&:downcase).compact_blank
+    params['tags'].to_s.split(',').map { |t| t.strip.downcase }.compact_blank
   end
 end
