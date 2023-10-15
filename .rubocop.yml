@@ -83,3 +83,7 @@ Rails/FilePath:
 
 Rails/I18nLocaleTexts:
   Enabled: false
+
+# doesn't work with Mongo
+Rails/FindEach: 
+  Enabled: false
