@@ -45,7 +45,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   end
 
   def tags_attributes(attributes)
-    attributes[:tags].to_s.split(',').map(&:strip).map(&:downcase).compact_blank
+    attributes[:tags].to_s.split(',').map { |t| t.strip.downcase }.compact_blank
   end
 
   def user(ident)
