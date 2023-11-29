@@ -90,7 +90,7 @@ GEM
     attr_required (1.0.1)
     awesome_print (1.9.2)
     bindata (2.4.12)
-    bootsnap (1.16.0)
+    bootsnap (1.17.0)
       msgpack (~> 1.2)
     bson (4.15.0)
     builder (3.2.4)
@@ -192,7 +192,7 @@ GEM
       mongoid (>= 2.0)
     mongoid-tree (2.2.0)
       mongoid (>= 4.0, < 9)
-    msgpack (1.6.0)
+    msgpack (1.7.2)
     multi_json (1.15.0)
     net-imap (0.4.1)
       date
