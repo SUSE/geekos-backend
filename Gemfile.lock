@@ -89,6 +89,7 @@ GEM
     ast (2.4.2)
     attr_required (1.0.1)
     awesome_print (1.9.2)
+    base64 (0.2.0)
     bindata (2.4.12)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
@@ -136,8 +137,8 @@ GEM
     graphiql-rails (1.9.0)
       railties
       sprockets-rails
-    graphql (2.1.6)
-      racc (~> 1.4)
+    graphql (2.2.10)
+      base64
     hashdiff (1.0.1)
     hashie (5.0.0)
     http-accept (1.7.0)
