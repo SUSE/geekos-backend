@@ -150,8 +150,8 @@ GEM
     graphiql-rails (1.9.0)
       railties
       sprockets-rails
-    graphql (2.1.6)
-      racc (~> 1.4)
+    graphql (2.3.4)
+      base64
     hashdiff (1.0.1)
     hashie (5.0.0)
     http-accept (1.7.0)
