@@ -26,6 +26,7 @@ jobs:
     env:
       RAILS_ENV: test
       geekos_mongodb_server: "localhost"
+      CODECOV_TOKEN: secrets.CODECOV_TOKEN
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,10 +42,11 @@ jobs:
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage/
-          files: codecov-result.json
-          verbose: false
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     fail_ci_if_error: false
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     directory: ./coverage/
+      #     files: codecov-result.json
+      #     verbose: false
