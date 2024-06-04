@@ -98,8 +98,6 @@ GEM
     cancancan (3.5.0)
     case_transform (0.2)
       activesupport
-    codecov (0.6.0)
-      simplecov (>= 0.15, < 0.22)
     concurrent-ruby (1.2.2)
     crack (0.4.5)
       rexml
@@ -408,7 +406,6 @@ DEPENDENCIES
   bootsnap
   byebug
   cancancan
-  codecov
   database_cleaner-mongoid
   dragonfly
   factory_bot_rails
