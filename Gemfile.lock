@@ -264,7 +264,7 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.0)
     rack (3.0.11)
-    rack-cache (1.14.0)
+    rack-cache (1.17.0)
       rack (>= 0.4)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
