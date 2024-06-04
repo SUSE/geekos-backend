@@ -1,5 +1,4 @@
 require 'simplecov'
-require 'codecov'
 SimpleCov.minimum_coverage 100
 SimpleCov.start 'rails' do
   add_filter 'lib/ldap.rb'
@@ -10,7 +9,7 @@ SimpleCov.start 'rails' do
   add_filter 'app/controllers/api/rooms_controller.rb'
   # has generated environment specific code
   add_filter 'app/controllers/graphql_controller.rb'
-  formatter(ENV['CI'] ? SimpleCov::Formatter::Codecov : SimpleCov::Formatter::HTMLFormatter)
+  formatter(SimpleCov::Formatter::HTMLFormatter)
 end
 
 ENV['RAILS_ENV'] = 'test'
