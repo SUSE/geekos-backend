@@ -1,6 +1,6 @@
 class UserSummarySerializer < ActiveModel::Serializer
   attributes :type, :email, :username, :title, :fullname, :phone, :gravatar, :picture_160,
-             :picture_25, :picture_50, :email, :teamlead_of
+             :picture_25, :picture_50, :email, :teamlead_of, :location, :room, :coordinates
 
   def type
     'user'
