@@ -229,7 +229,7 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.3)
-    nokogiri (1.16.5-x86_64-linux)
+    nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
     oauth (1.1.0)
       oauth-tty (~> 1.0, >= 1.0.1)
@@ -262,7 +262,7 @@ GEM
     public_suffix (5.0.4)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (3.0.11)
     rack-cache (1.14.0)
       rack (>= 0.4)
@@ -496,4 +496,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.3.7
+   2.6.9
