@@ -30,17 +30,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      # Add or replace dependency steps here
+      - name: Update OS
+        run: sudo apt-get update
+      - name: Install dependencies
+        run: sudo apt-get install -y imagemagick
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
           ruby-version: ${{ matrix.ruby-version }}
       # No database setup needed for mongo
-      - name: Build and test with rspec
-        run: bundle exec rspec
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
+      - name: Build and test with rspec
+        run: bundle exec rspec
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rails-logs
+          path: ./log/test.log
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
