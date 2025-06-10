@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.4
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
@@ -8,7 +8,7 @@ AllCops:
 
 inherit_from: .rubocop_todo.yml
 
-require:
+plugins:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
