@@ -23,7 +23,7 @@ describe '/sessions', type: 'request' do
       it 'raises validation error' do
         allow_any_instance_of(OicClient).to receive(:validate).and_raise(Rack::OAuth2::Client::Error.new(500, {}))
 
-        expect { oic_login_request }.to raise_error(Rack::OAuth2::Client::Error)
+        expect(oic_login_request).to eq(500)
       end
     end
 

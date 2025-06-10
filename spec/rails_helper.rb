@@ -22,7 +22,7 @@ require 'mongoid-rspec'
 require 'ffaker'
 require 'webmock/rspec'
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

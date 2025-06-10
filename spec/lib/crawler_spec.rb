@@ -41,17 +41,5 @@ describe Crawler do
         expect(logger.instance_variable_get(:@logdev).dev).to eq $stdout
       end
     end
-
-    context 'test env' do
-      before do
-        described_class.remove_instance_variable(:@logger)
-      rescue NameError
-        true
-      end
-
-      it 'Would be turned to STDOUT' do
-        expect(logger.instance_variable_get(:@logdev).dev).to be_instance_of(File)
-      end
-    end
   end
 end

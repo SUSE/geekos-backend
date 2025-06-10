@@ -46,7 +46,7 @@ RSpec/EmptyExampleGroup:
     - 'spec/serializers/user_serializer_spec.rb'
 
 # Offense count: 12
-ThreadSafety/InstanceVariableInClassMethod:
+ThreadSafety/ClassInstanceVariable:
   Exclude:
     - 'app/models/onboarding.rb'
     - 'lib/crawler.rb'

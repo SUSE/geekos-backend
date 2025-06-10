@@ -10,6 +10,7 @@ gem 'awesome_print'
 gem 'bootsnap', require: false
 gem 'puma'
 gem 'rails', '~> 7.0'
+gem 'sprockets-rails'
 
 # storage
 gem 'mongoid'
