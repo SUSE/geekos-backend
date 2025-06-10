@@ -30,7 +30,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      # Add or replace dependency steps here
+      - name: Update OS
+        run: sudo apt-get update
+      - name: Install dependencies
+        run: sudo apt-get install -y imagemagick
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
