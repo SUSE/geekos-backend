@@ -246,7 +246,7 @@ GEM
       version_gem (~> 1.1)
     oauth-tty (1.0.5)
       version_gem (~> 1.1, >= 1.1.1)
-    oj (3.16.11)
+    oj (3.16.13)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     oktakit (1.0.0)
@@ -266,7 +266,7 @@ GEM
       validate_url
       webfinger (~> 2.0)
     optimist (3.2.1)
-    ostruct (0.6.1)
+    ostruct (0.6.3)
     parallel (1.27.0)
     parser (3.3.8.0)
       ast (~> 2.4.1)
