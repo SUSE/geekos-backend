@@ -145,7 +145,7 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    ffaker (2.24.0)
+    ffaker (2.25.0)
     ffi (1.17.2-x86_64-linux-gnu)
     fiber-storage (1.0.1)
     figaro (1.2.0)
