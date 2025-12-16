@@ -24,7 +24,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :tags, only: %i[show index update], constraints: { id: /[\w\-.:& $%]+/ }, format: false do
+    resources :tags, only: %i[show index update], constraints: { id: /[äöüß\w\-.:& $%]+/ }, format: false do
       get :search, on: :collection
     end
 

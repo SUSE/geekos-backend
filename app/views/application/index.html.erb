@@ -3,52 +3,52 @@
 <h3>REST API</h3>
 
 <a href="<%= api_search_path(q: 'test') %>">/api/search?q=search_term</a> - Global search (users + teams)
-<br/><br/>
+<br /><br />
 
 <a href="<%= api_onboarding_path %>">/api/onboarding</a> - Onboarding Information
-<br/><br/>
+<br /><br />
 
 <a href="<%= api_teams_path %>">/api/teams</a> - All teams
-<br/>
+<br />
 <a href="<%= api_team_path(OrgUnit.last.try(:id) || '123') %>">/api/teams/&lt;teamid&gt;</a> - Single team
-<br/>
+<br />
 <a href="<%= root_api_teams_path %>">/api/teams/root</a> - Team tree, starting with root team
-<br/>
+<br />
 <a href="<%= search_api_teams_path(q: 'scc') %>">/api/teams/search?q=search_term</a> - Search teams
-<br/><br/>
+<br /><br />
 
 <a href="<%= api_user_path(User.last.try(:employeenumber) || '21868') %>">/api/users/:id</a> - User details
-<br/>
+<br />
 <a href="<%= search_api_users_path(q: 'test') %>">/api/users/search?q=search_term</a> - Search users
-<br/><br/>
+<br /><br />
 
 <a href="<%= api_locations_path %>">/api/locations</a> - Office locations
-<br/>
+<br />
 <a href="<%= api_location_path(id: '7') %>">/api/locations/:floor_id</a> - Users in one location
-<br/>
+<br />
 <a href="<%= api_location_room_path(location_id: '1', id: '1.2.7') %>">/api/locations/:floor_id/rooms/:floor_room_number</a> - Users in one room
-<br/><br/>
+<br /><br />
 
 <a href="<%= api_tags_path %>">/api/tags</a> - List tags
-<br/>
+<br />
 <a href="<%= api_tag_path(id: Tag.last.try(:name) || 'test') %>">/api/tag/&lt;name&gt;</a> - Show tag
-<br/>
+<br />
 <a href="<%= search_api_tags_path(q: Tag.last.try(:name) || 'test') %>">/api/tags/search?q=&lt;name&gt;</a> - Search tags
-<br/><br/>
+<br /><br />
 
 <a href="<%= api_meta_users_path %>">/api/meta/users</a> - List user stats, new users etc.
-<br/>
+<br />
 <a href="<%= api_meta_changes_path %>">/api/meta/changes</a> - List changes (admin only)
-<br/>
+<br />
 
 <h3>GraphQL API</h3>
 
 <style>
-pre {
-  background-color: #c0c0c0;
-  margin: 10px;
-  padding: 10px
-}
+  pre {
+    background-color: #c0c0c0;
+    margin: 10px;
+    padding: 10px
+  }
 </style>
 
 <% if Rails.env.development? %>
