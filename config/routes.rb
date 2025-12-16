@@ -24,12 +24,12 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :tags, only: %i[show index update], constraints: { id: /[0-9A-Za-z_\-.:& $%]+/ }, format: false do
+    resources :tags, only: %i[show index update], constraints: { id: /[\w\-.:& $%]+/ }, format: false do
       get :search, on: :collection
     end
 
     resources :locations, only: %i[show index] do
-      resources :rooms, only: [:show], constraints: { id: /[0-9A-Za-z\-.20%]+/ }, format: false
+      resources :rooms, only: [:show], constraints: { id: /[\w\-.20%]+/ }, format: false
     end
 
     get '/meta/users', to: 'meta#users'
