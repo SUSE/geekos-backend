@@ -22,7 +22,7 @@ class OicClient
   # Same value needs to be passed to the #validate method (store in users session)
   def auth_uri(nonce)
     client.authorization_uri(
-      scope: %i[profile email],
+      scope: %i[openid profile email],
       state: nonce,
       nonce:
     )
@@ -43,13 +43,13 @@ class OicClient
     # id_token = OpenIDConnect::ResponseObject::IdToken.decode(access_token.id_token, public_keys)
     id_token = OpenIDConnect::ResponseObject::IdToken.new(JSON::JWT.decode(access_token.id_token, :skip_verification))
     id_token.verify!({ client_id: @client_id, issuer: config.issuer, nonce: })
-
     access_token.userinfo!
   end
 
   private
 
   def client
+    # Rack::OAuth2.debug!
     @client ||= OpenIDConnect::Client.new(
       identifier: @client_id,
       secret: @secret,
