@@ -13,7 +13,7 @@ class Crawler::OrgTree < Crawler::BaseCrawler
   end
 
   def tree
-    @tree ||= Tree::TreeNode.new(root.fullname, root.employeenumber)
+    @tree ||= Tree::TreeNode.new(tree_node_name(root), root.employeenumber)
   end
 
   def cleanup!
@@ -34,9 +34,13 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     # log.debug "OrgTree -> Adding #{node.name} " \
     # "#{' with subordinates ' + subordinates.map(&:username).to_s if subordinates.any?}"
     subordinates.each do |subordinate|
-      node << construct_tree(node: Tree::TreeNode.new(subordinate.fullname, subordinate.employeenumber))
+      node << construct_tree(node: Tree::TreeNode.new(tree_node_name(subordinate), subordinate.employeenumber))
     end
     node
+  end
+
+  def tree_node_name(user)
+    "#{user.fullname} (#{user.employeenumber})"
   end
 
   def tree_to_mongo
