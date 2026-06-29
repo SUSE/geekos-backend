@@ -1,5 +1,6 @@
 class Api::BaseController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
+
   before_action :disable_session, :authenticate_user
 
   def current_user
