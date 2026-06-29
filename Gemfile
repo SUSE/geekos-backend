@@ -14,7 +14,7 @@ gem 'sprockets-rails'
 
 # storage
 gem 'mongoid'
-gem 'mongoid-audit_log'
+gem 'mongoid-audit_log', require: false # required by config/initializers/mongoid_audit_log_patch.rb
 gem 'mongoid-tree', require: 'mongoid/tree'
 
 # api

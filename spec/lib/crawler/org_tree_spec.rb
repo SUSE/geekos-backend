@@ -57,7 +57,7 @@ describe Crawler::OrgTree do
     let!(:root_user) { create(:user, :ldap, :root) }
 
     it { is_expected.to be_instance_of(Tree::TreeNode) }
-    its(:name) { is_expected.to eq root_user.fullname }
+    its(:name) { is_expected.to eq "#{root_user.fullname} (#{root_user.employeenumber})" }
     its(:content) { is_expected.to eq root_user.employeenumber }
   end
 

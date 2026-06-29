@@ -1,4 +1,4 @@
-FROM ruby:3.4.4
+FROM ruby:3.4.8
 ENV RAILS_ENV=production
 ENV BUNDLE_WITHOUT=development
 
