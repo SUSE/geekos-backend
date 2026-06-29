@@ -159,7 +159,8 @@ GEM
       fiber-storage
       logger
     hashdiff (1.2.0)
-    hashie (5.0.0)
+    hashie (5.1.0)
+      logger
     http-accept (1.7.0)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
