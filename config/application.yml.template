@@ -14,3 +14,5 @@
 "oic_client_id": ""
 "oic_secret": ""
 "okta_token": ""
+"geekos_suseid_url": "https://id.suse.com"
+"geekos_suseid_token": ""

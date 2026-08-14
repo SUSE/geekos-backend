@@ -37,6 +37,8 @@ class User
   # Synced attributes
   field :ldap, type: Hash, default: {}
   field :okta, type: Hash, default: {}
+  # collected by Crawler::Suseid, not mapped to any attribute yet
+  field :suseid, type: Hash, default: {}
 
   # Mappings:
   attribute_mapping :title, 'ldap.title', overwriteable: true
