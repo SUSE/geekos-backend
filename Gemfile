@@ -6,7 +6,6 @@ git_source(:github) do |repo_name|
 end
 
 # Core
-gem 'awesome_print'
 gem 'bootsnap', require: false
 gem 'puma'
 gem 'rails', '~> 7.2'

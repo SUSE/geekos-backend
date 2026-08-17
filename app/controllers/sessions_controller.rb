@@ -17,6 +17,15 @@ class SessionsController < ApplicationController
     else
       logger.error("Failed login from #{userinfo.email}: User not found")
     end
-    redirect_to((session[:frontend_url] || '/') + "?auth_token=#{auth_token}", allow_other_host: true)
+    redirect_to(frontend_redirect_url(auth_token), allow_other_host: true)
+  end
+
+  private
+
+  # the frontend url can carry a fragment, the query has to go before it
+  def frontend_redirect_url(auth_token)
+    uri = URI.parse(session[:frontend_url] || '/')
+    uri.query = [uri.query, "auth_token=#{auth_token}"].compact.join('&')
+    uri.to_s
   end
 end

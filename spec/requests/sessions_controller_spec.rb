@@ -39,6 +39,15 @@ describe '/sessions', type: 'request' do
         expect(oic_login_request).to redirect_to("/?auth_token=#{user.auth_token}")
       end
 
+      it 'puts the auth token before a fragment of the frontend url' do
+        allow_any_instance_of(OicClient).to receive(:auth_uri).and_return('https://localhost')
+        get sessions_init_url, params: { frontend_url: 'http://geekos.scc.suse.de/team/1#' }
+        allow_any_instance_of(OicClient).to receive(:validate).and_return(userinfo)
+        allow(userinfo).to receive(:email).and_return(user.email)
+
+        expect(oic_login_request).to redirect_to("http://geekos.scc.suse.de/team/1?auth_token=#{user.auth_token}#")
+      end
+
       it 'redirects to the frontend without auth token if user not found' do
         allow_any_instance_of(OicClient).to receive(:validate).and_return(userinfo)
         allow(userinfo).to receive(:email).and_return('no')
