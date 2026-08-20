@@ -79,11 +79,14 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     Mongoid::AuditLog.record { unit.members << user }
   end
 
-  # The division of the lead is the only source for the name. A manual
-  # rename in the web ui survives until the next crawl.
+  # The division of the first team member is the only source for the name,
+  # the lead itself usually sits in the parent division. Sorted by username,
+  # so that the name does not flip between crawls. A manual rename in the
+  # web ui survives until the next crawl.
   def set_orgunit_name(org, leader)
-    division = leader.suseid['division']
-    log.warn "OrgTree -> No division for lead #{leader.username}, keeping '#{org.name}'" if division.blank?
+    member = leader.subordinates.min_by { |user| user.username.to_s }
+    division = member.suseid['division']
+    log.warn "OrgTree -> No division for member #{member.username}, keeping '#{org.name}'" if division.blank?
     return if division.blank? || division == org.name
 
     log.info "OrgTree -> Renaming org unit of #{leader.username}: '#{org.name}' -> '#{division}'"

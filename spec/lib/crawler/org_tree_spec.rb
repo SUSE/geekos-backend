@@ -168,9 +168,18 @@ describe Crawler::OrgTree do
       expect(OrgUnit.count).to be 4
     end
 
-    it 'names the orgunit after the division of the lead' do
+    def first_member_of(unit)
+      unit.lead.subordinates.min_by { |user| user.username.to_s }
+    end
+
+    it 'names the orgunit after the division of the first team member' do
       unit = OrgUnit.find_by(depth: 3)
-      expect(unit.name).to eq unit.lead.suseid['division']
+      expect(unit.name).to eq first_member_of(unit).suseid['division']
+    end
+
+    it 'ignores the division of the lead' do
+      unit = OrgUnit.find_by(depth: 3)
+      expect(unit.name).not_to eq unit.lead.suseid['division']
     end
 
     it 'overwrites a manual rename' do
@@ -178,13 +187,14 @@ describe Crawler::OrgTree do
       unit.update!(name: 'Department1')
 
       described_class.new.tree_to_mongo
-      expect(unit.reload.name).to eq unit.lead.suseid['division']
+      expect(unit.reload.name).to eq first_member_of(unit).suseid['division']
     end
 
-    it 'keeps the name when the lead has no division' do
+    it 'keeps the name when the first team member has no division' do
       unit = OrgUnit.find_by(depth: 3)
       name_before = unit.name
-      unit.lead.update!(suseid: unit.lead.suseid.except('division'))
+      member = first_member_of(unit)
+      member.update!(suseid: member.suseid.except('division'))
 
       described_class.new.tree_to_mongo
       expect(unit.reload.name).to eq name_before
