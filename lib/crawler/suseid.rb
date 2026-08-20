@@ -1,8 +1,8 @@
 # Fetching user attributes from Authentik
 #
-# This crawler only collects data. It does not create, delete or re-parent
-# users, the LDAP and Okta crawlers stay in charge of that. The attributes
-# land in `user.suseid` and are not mapped to any user attribute yet.
+# This crawler creates, updates and deletes users, and it sets their
+# manager. The attributes land in `user.suseid`, where the mappings of
+# the User model pick them up.
 #
 # API docs: https://docs.goauthentik.io/docs/developer-docs/api/
 # Single user: `Crawler::Suseid.new.user_by_email('tschmidt@suse.com')`
@@ -20,6 +20,8 @@ class Crawler::Suseid < Crawler::BaseCrawler
     super
     log.info "SUSEID -> Found #{users.size} SUSE ID users"
     update_users
+    cleanup
+    set_managers
     nil
   end
 
@@ -38,19 +40,56 @@ class Crawler::Suseid < Crawler::BaseCrawler
 
   def update_users
     users.each do |user_hash|
-      user = User.find_by('ldap.mail': user_hash['email'])
-      if user
-        attributes_before = user.attributes['suseid'].clone
-        user['suseid'] = user_hash
-        if user.changed.present?
-          log.info "SUSEID -> Updating user #{user.username}: " \
-                   "#{deep_diff(attributes_before, user.attributes['suseid'])}"
-        end
-        Mongoid::AuditLog.record { user.save! }
-      else
-        log.debug "SUSEID -> User not found in db: #{user_hash['email']}"
+      user = User.find(user_hash['username']) || User.new
+      log.info "SUSEID -> New user: #{user_hash['username']} (#{user_hash['email']})" if user.new_record?
+      attributes_before = user.attributes['suseid'].clone
+      user['suseid'] = user_hash
+      if user.persisted? && user.changed.present?
+        log.info "SUSEID -> Updating user #{user_hash['username']}: " \
+                 "#{deep_diff(attributes_before, user.attributes['suseid'])}"
       end
+      Mongoid::AuditLog.record { user.save! }
     end
+  end
+
+  # Runs after cleanup, so every user of this crawl exists and retired
+  # managers are gone. No recursion needed, unlike the ldap crawler.
+  def set_managers
+    users.each do |user_hash|
+      user = User.find(user_hash['username'])
+      manager = manager_for(user_hash)
+      # the ceo manages themselves
+      next if user.nil? || manager == user || manager == user.manager
+
+      log.info "SUSEID -> Manager of #{user_hash['username']}: #{user.manager&.username} -> #{manager&.username}"
+      Mongoid::AuditLog.record { user.update!(manager: manager) }
+    end
+  end
+
+  def manager_for(user_hash)
+    uid = user_hash['managerUid']
+    return if uid.blank?
+
+    manager = User.find(uid)
+    log.warn "SUSEID -> Manager '#{uid}' not found for '#{user_hash['username']}'" if manager.nil?
+    manager
+  end
+
+  def cleanup
+    log.debug "SUSEID -> in SUSE ID: #{users.count} entries, locally: #{User.count} entries"
+    log.info 'SUSEID -> nothing to cleanup' and return if users_to_cleanup.empty?
+
+    log.info 'SUSEID -> deleting absent users from the local storage'
+    raise "Too many missing users (#{users_to_cleanup.size}), SUSE ID issue?" if users_to_cleanup.size > 75
+
+    users_to_cleanup.each do |user|
+      log.info "SUSEID -> retiring #{user.fullname}: #{user.username}"
+      user.destroy!
+    end
+  end
+
+  def users_to_cleanup
+    @users_to_cleanup ||= User.not.in('suseid.username': users.pluck('username')).to_a
   end
 
   # Flatten an authentik user into the attributes geekos uses
@@ -61,7 +100,8 @@ class Crawler::Suseid < Crawler::BaseCrawler
       'name' => user['name'],
       # the ldap uuid, same as attributes.ldap_uniq, not authentik's own top level uuid
       'uuid' => attrs['uuid'],
-      'date_joined' => user['date_joined'],
+      # the api sends a timestamp, geekos keeps the date only
+      'date_joined' => user['date_joined']&.to_date&.to_s,
       'title' => attrs['title'],
       'office' => attrs['office'],
       'division' => attrs['division'],

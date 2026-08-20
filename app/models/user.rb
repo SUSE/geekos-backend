@@ -8,7 +8,8 @@ class User
 
   INDEXED_FIELDS = [:title, :notes, :opensuse_username, 'ldap.title', 'ldap.mail',
                     'ldap.samaccountname', 'ldap.displayname', 'okta.githubUsername',
-                    'okta.trelloId'].freeze
+                    'okta.trelloId', 'suseid.title', 'suseid.email', 'suseid.username',
+                    'suseid.name', 'suseid.githubUsername'].freeze
   include MongoFtSearchable
 
   after_initialize :reset_auth_token, if: :new_record?
@@ -37,28 +38,33 @@ class User
   # Synced attributes
   field :ldap, type: Hash, default: {}
   field :okta, type: Hash, default: {}
-  # collected by Crawler::Suseid, not mapped to any attribute yet
   field :suseid, type: Hash, default: {}
 
   # Mappings:
-  attribute_mapping :title, 'ldap.title', overwriteable: true
-  attribute_mapping :phone, 'ldap.telephonenumber', overwriteable: true
-  attribute_mapping :email, 'ldap.mail'
-  attribute_mapping :username, 'ldap.samaccountname'
-  attribute_mapping :fullname, 'ldap.displayname'
-  attribute_mapping :country, 'ldap.co'
-  attribute_mapping :employeenumber, 'ldap.employeenumber'
-  attribute_mapping :github_usernames, 'okta.githubUsername'
+  attribute_mapping :title, 'suseid.title', overwriteable: true
+  attribute_mapping :phone, 'suseid.telephoneNumber', overwriteable: true
+  attribute_mapping :email, 'suseid.email'
+  attribute_mapping :username, 'suseid.username'
+  attribute_mapping :fullname, 'suseid.name'
+  attribute_mapping :country, 'suseid.country'
+  attribute_mapping :employeenumber, 'suseid.employeeNumber'
+  attribute_mapping :github_usernames, 'suseid.githubUsername'
+  attribute_mapping :join_date, 'suseid.date_joined'
+  # SUSE ID has no equivalent
   attribute_mapping :trello_username, 'okta.trelloId'
-  attribute_mapping :join_date, 'okta.employeeStartDate'
 
   validates :auth_token, uniqueness: true, presence: true
   validates :coordinates, format: { with: /\A-?\d{1,2}\.\d{1,15}, ?-?\d{1,3}\.\d{1,15}\z/,
                                     message: "requires format like '49.446444, 11.330570'" }, allow_blank: true
 
+  # the ldap keys stay in the lookup until every user carries a suseid hash
   def self.find(ident)
-    query = ident.numeric? ? { 'ldap.employeenumber': ident } : { 'ldap.samaccountname': ident }
-    find_by(query) || find_by(id: ident)
+    fields = if ident.numeric?
+               %w[suseid.employeeNumber ldap.employeenumber]
+             else
+               %w[suseid.username ldap.samaccountname]
+             end
+    find_by(:$or => fields.map { |field| { field => ident } }) || find_by(id: ident)
   end
 
   def gravatar

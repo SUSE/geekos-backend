@@ -1,6 +1,6 @@
 class Api::MetaController < Api::BaseController
   def users
-    newcomers = User.desc('okta.employeeStartDate').limit(15)
+    newcomers = User.desc('suseid.date_joined').limit(15)
     render json: { count: User.count,
                    newcomers: newcomers.map { |n| UserSerializer.new(n) } }, status: :ok
   end

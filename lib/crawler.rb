@@ -1,7 +1,6 @@
 module Crawler
   CRAWLERS = %i[
-    ldap
-    okta
+    suseid
     org_tree
   ].freeze
 

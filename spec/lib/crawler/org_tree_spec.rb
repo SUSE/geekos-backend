@@ -10,7 +10,7 @@ describe Crawler::OrgTree do
       allow_any_instance_of(described_class).to receive(:tree_to_mongo).and_return(:bar)
     end
 
-    let(:exception_message_user) { 'Root user not found. Use Crawler::Ldap.new.run before' }
+    let(:exception_message_user) { 'Root user not found. Use Crawler::Suseid.new.run before' }
 
     it 'raises when there is no root user' do
       User.destroy_all
@@ -168,17 +168,26 @@ describe Crawler::OrgTree do
       expect(OrgUnit.count).to be 4
     end
 
-    it 'defaults orgunit name to leader title' do
+    it 'names the orgunit after the division of the lead' do
       unit = OrgUnit.find_by(depth: 3)
-      unit.lead.update!(title: 'Manager of Heroes')
-      unit.update!(name: '')
-      described_class.new.tree_to_mongo
-      expect(unit.reload.name).to eq 'Heroes'
+      expect(unit.name).to eq unit.lead.suseid['division']
     end
 
-    it 'defaults orgunit name to lead name' do
+    it 'overwrites a manual rename' do
       unit = OrgUnit.find_by(depth: 3)
-      expect(unit.name).to eq "#{unit.lead.fullname}'s team"
+      unit.update!(name: 'Department1')
+
+      described_class.new.tree_to_mongo
+      expect(unit.reload.name).to eq unit.lead.suseid['division']
+    end
+
+    it 'keeps the name when the lead has no division' do
+      unit = OrgUnit.find_by(depth: 3)
+      name_before = unit.name
+      unit.lead.update!(suseid: unit.lead.suseid.except('division'))
+
+      described_class.new.tree_to_mongo
+      expect(unit.reload.name).to eq name_before
     end
 
     it 'skips leaf creation if user is not found' do
@@ -186,13 +195,6 @@ describe Crawler::OrgTree do
       allow_any_instance_of(OrgUnit).to receive(:name)
       expect_any_instance_of(ActiveSupport::Logger).to receive(:error).with(/Did not find user/)
       described_class.new.tree_to_mongo
-    end
-
-    it 'retains existing org unit name if it was changed' do
-      unit = OrgUnit.find_by(depth: 3)
-      unit.update!(name: 'Department1')
-      described_class.new.tree_to_mongo
-      expect(unit.reload.name).to eq 'Department1'
     end
   end
 end

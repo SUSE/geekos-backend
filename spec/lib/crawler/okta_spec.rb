@@ -27,8 +27,9 @@ describe Crawler::Okta do
       expect { okta_crawler.run }.to change { user.reload.trello_username }
     end
 
+    # github_usernames maps to suseid now, okta only keeps the raw attribute
     it 'updates gh usernames' do
-      expect { okta_crawler.run }.to change { user.reload.github_usernames }
+      expect { okta_crawler.run }.to change { user.reload.okta['githubUsername'] }
     end
 
     it 'drops inactive users' do

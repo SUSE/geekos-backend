@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe '/api/meta' do
   before do
-    create_list(:user, 5, :okta)
+    create_list(:user, 5, :ldap)
   end
 
   describe 'users' do
@@ -11,8 +11,8 @@ describe '/api/meta' do
     it 'returns the latest joined users' do
       users
       newcomers = response.parsed_body['newcomers']
-      expect(newcomers.first['join_date']).to eq User.desc('okta.employeeStartDate').first.join_date
-      expect(newcomers.first['join_date']).to match(/201\d-/)
+      expect(newcomers.first['join_date']).to eq User.desc('suseid.date_joined').first.join_date.first(10)
+      expect(newcomers.first['join_date']).to match(/\A201\d-\d\d-\d\d\z/)
     end
   end
 

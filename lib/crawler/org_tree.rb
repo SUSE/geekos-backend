@@ -3,7 +3,7 @@ class Crawler::OrgTree < Crawler::BaseCrawler
 
   def run
     super
-    raise 'Root user not found. Use Crawler::Ldap.new.run before' unless root
+    raise 'Root user not found. Use Crawler::Suseid.new.run before' unless root
 
     !!(construct_tree && tree_to_mongo && cleanup!)
   end
@@ -60,7 +60,7 @@ class Crawler::OrgTree < Crawler::BaseCrawler
           end
           log.info "OrgTree -> New org unit with lead #{user.username}" if org.new_record?
           Mongoid::AuditLog.record { org.save! && user.save! }
-          set_default_orgunit_name(org, user) if org.name.blank?
+          set_orgunit_name(org, user)
         end
       else
         log.error "OrgTree -> Did not find user for node: #{tree_node.name} (#{tree_node.content})"
@@ -78,16 +78,14 @@ class Crawler::OrgTree < Crawler::BaseCrawler
     Mongoid::AuditLog.record { unit.members << user }
   end
 
-  def set_default_orgunit_name(org, leader)
-    leader_titles = [
-      'Head of', '(Senior )?Engineering Manager[,\- ]*',
-      '(Senior )?Manager[,\- ]*(of)?', 'Team[ ]?lead(er)?[,\- ]*(of)?(for)?',
-      'Director[,\- ]*(of)?', '^VP[,\- ]*[of]*', 'Vice President[ of]?'
-    ]
-    title_match = leader_titles.find { |lt| leader.title =~ /#{lt}/i }
-    name = leader.title.gsub(/#{title_match}/i, '').strip if title_match
-    name = "#{leader.fullname}'s team" if name.blank?
-    log.info "OrgTree -> Setting team name '#{name}'"
-    Mongoid::AuditLog.record { org.update!(name:) }
+  # The division of the lead is the only source for the name. A manual
+  # rename in the web ui survives until the next crawl.
+  def set_orgunit_name(org, leader)
+    division = leader.suseid['division']
+    log.warn "OrgTree -> No division for lead #{leader.username}, keeping '#{org.name}'" if division.blank?
+    return if division.blank? || division == org.name
+
+    log.info "OrgTree -> Renaming org unit of #{leader.username}: '#{org.name}' -> '#{division}'"
+    Mongoid::AuditLog.record { org.update!(name: division) }
   end
 end

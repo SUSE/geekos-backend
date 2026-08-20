@@ -12,7 +12,7 @@ module Types
       argument :order, String, required: false
     end
 
-    # 'order' cannot use mapped attributes, needs full name, like 'okta.employeeStartDate'
+    # 'order' cannot use mapped attributes, needs full name, like 'suseid.date_joined'
     def users(order: nil, limit: nil)
       users = User.all
       users = users.sort({ order => -1 }) if order

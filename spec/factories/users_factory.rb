@@ -9,10 +9,17 @@ FactoryBot.define do
     end
 
     after(:create) do |instance, evaluator|
-      instance.update(ldap: instance.ldap.update(samaccountname: evaluator.username)) if evaluator.username
-      instance.update(ldap: instance.ldap.update(employeenumber: evaluator.employeenumber)) if evaluator.employeenumber
+      if evaluator.username
+        instance.update(ldap: instance.ldap.update(samaccountname: evaluator.username),
+                        suseid: instance.suseid.update(username: evaluator.username))
+      end
+      if evaluator.employeenumber
+        instance.update(ldap: instance.ldap.update(employeenumber: evaluator.employeenumber),
+                        suseid: instance.suseid.update(employeeNumber: evaluator.employeenumber))
+      end
     end
 
+    # The mapped attributes read from `suseid`, so a synced user carries both hashes
     trait :ldap do
       ldap do
         { samaccountname: FFaker::Name.first_name,
@@ -24,6 +31,18 @@ FactoryBot.define do
           displayname: "#{FFaker::Name.first_name} #{FFaker::Name.last_name}",
           cn: 'de' }.stringify_keys
       end
+
+      suseid do
+        { username: ldap['samaccountname'],
+          employeeNumber: ldap['employeenumber'],
+          email: ldap['mail'],
+          telephoneNumber: ldap['telephonenumber'],
+          country: ldap['co'],
+          title: ldap['title'],
+          name: ldap['displayname'],
+          division: "#{FFaker::Name.first_name} division",
+          date_joined: FFaker.numerify('201#-0#-1#T##:##:##.######Z') }.stringify_keys
+      end
     end
 
     trait :okta do
@@ -33,9 +52,7 @@ FactoryBot.define do
     end
 
     trait :root do
-      after(:create) do |instance|
-        instance.update(ldap: instance.ldap.update(samaccountname: Crawler::OrgTree::ROOT_USERNAME))
-      end
+      username { Crawler::OrgTree::ROOT_USERNAME }
     end
   end
 end

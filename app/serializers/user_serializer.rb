@@ -6,6 +6,11 @@ class UserSerializer < UserSummarySerializer
              :birthday, :teamlead_of, :org_unit, :tags, :admin,
              :opensuse_username, :github_usernames, :trello_username
 
+  # SUSE ID sends a timestamp, the API keeps the date only
+  def join_date
+    object.join_date&.first(10)
+  end
+
   def tags
     object.tags.pluck(:name)
   end

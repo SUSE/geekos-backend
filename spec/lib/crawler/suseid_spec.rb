@@ -4,7 +4,7 @@ describe Crawler::Suseid do
   subject(:suseid_crawler) { described_class.new }
 
   # one result of https://id.suse.com/api/v3/core/users/
-  def api_user(username, employee_number, email: nil, github: nil)
+  def api_user(username, employee_number, email: nil, github: nil, manager: 'boss')
     { 'username' => username,
       'email' => email || "#{username}@suse.com",
       'name' => "Mr #{username}",
@@ -21,12 +21,12 @@ describe Crawler::Suseid do
         'employeeNumber' => employee_number,
         'telephoneNumber' => "+49 #{employee_number}",
         'address' => { 'country' => 'DE' },
-        'managerUid' => 'boss',
+        'managerUid' => manager,
         'socialId' => github ? { 'GitHub' => github } : {}
       } }
   end
 
-  let(:user) { create(:user, :ldap) }
+  let(:user) { create(:user, :ldap, username: 'u1') }
   let(:api_users) { [api_user('u1', '00000002', email: user.email, github: 'gh_1')] }
 
   before do
@@ -42,7 +42,7 @@ describe Crawler::Suseid do
       suseid_crawler.run
       expect(user.reload.suseid).to eq(
         'username' => 'u1', 'email' => user.email, 'name' => 'Mr u1', 'uuid' => 'ldap-uuid-u1',
-        'date_joined' => '2026-02-10T16:33:10.634626Z', 'title' => 'Job 00000002',
+        'date_joined' => '2026-02-10', 'title' => 'Job 00000002',
         'office' => 'DENUE - Nuremberg', 'division' => 'Engineering', 'department' => 'Global Sales',
         'costCenter' => '110488889', 'workLocationType' => 'Home-Based', 'employeeNumber' => '00000002',
         'telephoneNumber' => '+49 00000002', 'country' => 'DE', 'managerUid' => 'boss',
@@ -54,20 +54,42 @@ describe Crawler::Suseid do
       expect { suseid_crawler.run }.not_to(change { user.reload.attributes.slice('ldap', 'okta') })
     end
 
-    context 'when the suse id user has no record in the db' do
-      let(:api_users) { [api_user('nobody', '00000003')] }
+    context 'when the manager is part of the same crawl' do
+      let(:api_users) do
+        [api_user('u1', '00000002', email: user.email), api_user('boss', '00000009')]
+      end
 
-      it 'does not create the user' do
-        user
-        expect { suseid_crawler.run }.not_to change(User, :count)
+      it 'sets the manager' do
+        suseid_crawler.run
+        expect(user.reload.manager).to eq User.find('boss')
+      end
+
+      it 'skips the self reference of the ceo' do
+        suseid_crawler.run
+        expect(User.find('boss').manager).to be_nil
       end
     end
 
-    it 'does not delete users that are unknown in suse id' do
+    it 'clears a manager that is gone from suse id' do
+      user.update!(manager: create(:user, :ldap))
+
+      suseid_crawler.run
+      expect(user.reload.manager).to be_nil
+    end
+
+    context 'when the suse id user has no record in the db' do
+      let(:api_users) { [api_user('nobody', '00000003')] }
+
+      it 'creates the user' do
+        expect { suseid_crawler.run }.to change { User.find('nobody') }.from(nil)
+      end
+    end
+
+    it 'deletes users that are unknown in suse id' do
       gone_user = create(:user, :ldap)
 
       suseid_crawler.run
-      expect(User.find_by(id: gone_user.id)).to eq gone_user
+      expect(User.find_by(id: gone_user.id)).to be_nil
     end
 
     it 'raises without a token' do
