@@ -1,5 +1,6 @@
 class Crawler::OrgTree < Crawler::BaseCrawler
-  ROOT_USERNAME = ENV.fetch('geekos_root_username', nil)
+  # a default keeps the `:root` factory trait usable where the env var is absent, like ci
+  ROOT_USERNAME = ENV.fetch('geekos_root_username', 'root')
 
   def run
     super
