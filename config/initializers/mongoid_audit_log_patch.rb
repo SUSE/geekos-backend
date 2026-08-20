@@ -8,3 +8,7 @@
 Mongoid::Warnings.instance_variable_set(:@symbol_type_deprecated, true)
 require 'mongoid/audit_log'
 Mongoid::AuditLog::Entry.field :action, type: Mongoid::StringifiedSymbol
+
+# Retention for the audit log. Declared here so that `rake db:mongoid:create_indexes`
+# recreates the ttl index, instead of it living only in the database.
+Mongoid::AuditLog::Entry.index({ created_at: 1 }, expire_after_seconds: 365.days.to_i)

@@ -40,7 +40,7 @@ To export the graphql schema, run: `bundle exec rake graphql:export`
 ## Importing data
 
 * To run the default set of crawlers, run: `Crawler.run`
-* To run only one specific crawler, run for example: `Crawler::Ldap.new.run`
+* To run only one specific crawler, run for example: `Crawler::Suseid.new.run`
 * After initial import, create indexes: `> bundle exec rake db:mongoid:create_indexes`
 
 
