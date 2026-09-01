@@ -20,9 +20,11 @@ describe '/sessions', type: 'request' do
                                      .and_return('https://geekos.suse.net/backend/sessions/login')
         allow_any_instance_of(OicClient).to receive(:auth_uri).and_return('https://localhost')
 
-        expect(OicClient).to receive(:new).with('https://geekos.suse.net/backend/sessions/login')
-                                          .and_call_original
+        allow(OicClient).to receive(:new).and_call_original
+
         oic_init_request
+
+        expect(OicClient).to have_received(:new).with('https://geekos.suse.net/backend/sessions/login')
       end
     end
   end
