@@ -16,3 +16,4 @@
 "okta_token": ""
 "geekos_suseid_url": "https://id.suse.com"
 "geekos_suseid_token": ""
+"oic_redirect_uri": nil

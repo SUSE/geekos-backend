@@ -12,6 +12,19 @@ describe '/sessions', type: 'request' do
         expect(oic_init_request).to eq 302
       end
     end
+
+    context 'with oic_redirect_uri set' do
+      it 'uses it instead of the request based url' do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with('oic_redirect_uri', anything)
+                                     .and_return('https://geekos.suse.net/backend/sessions/login')
+        allow_any_instance_of(OicClient).to receive(:auth_uri).and_return('https://localhost')
+
+        expect(OicClient).to receive(:new).with('https://geekos.suse.net/backend/sessions/login')
+                                          .and_call_original
+        oic_init_request
+      end
+    end
   end
 
   describe '#login' do
